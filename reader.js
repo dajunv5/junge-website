@@ -283,7 +283,7 @@
     let fontSize = 16;
     let isLightTheme = false;
     let activeParagraph = -1;
-    let speechRate = 1.0;
+    let speechRate = 0.7;
 
     // ===== Mandarin Voice Selection =====
     let _cnVoice = null;
@@ -809,12 +809,25 @@
     // ===== Speech / 发音功能 =====
     let _currentUtterance = null;
 
+    // 清洗朗读文本：去除标点符号，只保留文字和数字
+    function _cleanText(text, lang) {
+        if (lang === 'en') {
+            // 英文：保留字母、数字、空格、撇号(如 don't)，去掉其他标点
+            return text.replace(/[^a-zA-Z0-9\s']/g, ' ').replace(/\s+/g, ' ').trim();
+        } else {
+            // 中文：保留汉字、数字，去掉所有标点（包括中文标点、。！？、等）
+            return text.replace(/[^\u4e00-\u9fff\u3400-\u4dbf0-9a-zA-Z\s]/g, ' ').replace(/\s+/g, ' ').trim();
+        }
+    }
+
     window._speakWord = function(word) {
         if (!window.speechSynthesis) return;
         window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(word);
+        const clean = _cleanText(word, 'en');
+        if (!clean) return;
+        const u = new SpeechSynthesisUtterance(clean);
         u.lang = 'en-US';
-        u.rate = Math.max(0.5, speechRate * 0.85);
+        u.rate = Math.max(0.4, speechRate * 0.8);
         u.pitch = 1.1;
         window.speechSynthesis.speak(u);
     };
@@ -822,17 +835,19 @@
     window._speakPara = function(el) {
         if (!window.speechSynthesis) return;
         window.speechSynthesis.cancel();
-        const text = el.getAttribute('data-text');
+        const rawText = el.getAttribute('data-text');
         const lang = el.getAttribute('data-lang');
-        const u = new SpeechSynthesisUtterance(text);
+        const clean = _cleanText(rawText, lang);
+        if (!clean) return;
+        const u = new SpeechSynthesisUtterance(clean);
         if (lang === 'en') {
             u.lang = 'en-US';
-            u.rate = Math.max(0.5, speechRate * 0.85);
+            u.rate = Math.max(0.4, speechRate * 0.8);
         } else {
             const cnVoice = _findMandarinVoice();
             if (cnVoice) u.voice = cnVoice;
             u.lang = 'zh-CN';
-            u.rate = Math.max(0.5, speechRate);
+            u.rate = Math.max(0.4, speechRate * 0.9);
         }
         u.pitch = 1.0;
 
@@ -852,18 +867,24 @@
         const paras = document.querySelectorAll(`#${bodyId} .text-paragraph`);
         if (!paras.length) return;
 
+        // 逐段拼接，段落间加自然停顿（空格）
         let fullText = '';
-        paras.forEach(p => { fullText += p.getAttribute('data-text') + '. '; });
+        paras.forEach(p => {
+            const clean = _cleanText(p.getAttribute('data-text'), lang);
+            if (clean) fullText += clean + '  ';
+        });
+        fullText = fullText.trim();
+        if (!fullText) return;
 
-        const u = new SpeechSynthesisUtterance(fullText.trim());
+        const u = new SpeechSynthesisUtterance(fullText);
         if (lang === 'en') {
             u.lang = 'en-US';
-            u.rate = Math.max(0.5, speechRate * 0.85);
+            u.rate = Math.max(0.4, speechRate * 0.8);
         } else {
             const cnVoice = _findMandarinVoice();
             if (cnVoice) u.voice = cnVoice;
             u.lang = 'zh-CN';
-            u.rate = Math.max(0.5, speechRate * 0.95);
+            u.rate = Math.max(0.4, speechRate * 0.9);
         }
         window.speechSynthesis.speak(u);
 
