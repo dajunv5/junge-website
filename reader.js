@@ -283,24 +283,54 @@
     let fontSize = 16;
     let isLightTheme = false;
     let activeParagraph = -1;
-    let speechRate = 0.7;
+    let speechRate = 0.35;
 
     // ===== Mandarin Voice Selection =====
     let _cnVoice = null;
+    let _enVoice = null;
+
     function _findMandarinVoice() {
         if (_cnVoice) return _cnVoice;
         if (!window.speechSynthesis) return null;
         const voices = window.speechSynthesis.getVoices();
         if (!voices.length) return null;
-        // 优先选 zh-CN (大陆普通话)，再选 cmn 开头，排除粤语(zh-HK)和繁体(zh-TW)
-        _cnVoice = voices.find(v => v.lang === 'zh-CN') ||
+        // 优先选择甜美女声: XiaoXiao > Ting-Ting > Lili > 任意zh-CN女声
+        const femaleNames = ['xiaoXiao', 'xiaoxiao', 'XiaoYi', 'xiaoyi', 'ting-ting', 'Ting-Ting', 'lili', 'Lili', 'yaoyao', 'kato', 'Google 普通话'];
+        for (const name of femaleNames) {
+            const found = voices.find(v => v.name.toLowerCase().includes(name.toLowerCase()) &&
+                (v.lang === 'zh-CN' || v.lang.startsWith('cmn') || (v.lang.startsWith('zh') && !v.lang.includes('HK') && !v.lang.includes('TW'))));
+            if (found) { _cnVoice = found; return _cnVoice; }
+        }
+        // 回退：任意 zh-CN / cmn 女声（排除男声常见名字）
+        const maleNames = ['yunxi', 'yunyang', 'kangkang'];
+        _cnVoice = voices.find(v => v.lang === 'zh-CN' && !maleNames.some(m => v.name.toLowerCase().includes(m))) ||
+                   voices.find(v => v.lang === 'zh-CN') ||
                    voices.find(v => v.lang.startsWith('cmn')) ||
                    voices.find(v => v.lang.startsWith('zh') && !v.lang.includes('HK') && !v.lang.includes('TW'));
         return _cnVoice;
     }
+
+    function _findEnglishFemaleVoice() {
+        if (_enVoice) return _enVoice;
+        if (!window.speechSynthesis) return null;
+        const voices = window.speechSynthesis.getVoices();
+        if (!voices.length) return null;
+        const femaleNames = ['samantha', 'karen', 'victoria', 'zira', 'hazel', 'susan', 'fiona', 'moira', 'tessa', 'Google US English', 'Microsoft Zira'];
+        for (const name of femaleNames) {
+            const found = voices.find(v => v.name.toLowerCase().includes(name.toLowerCase()) && v.lang.startsWith('en'));
+            if (found) { _enVoice = found; return _enVoice; }
+        }
+        // 回退：任意 en-US 女声
+        const maleNames = ['daniel', 'james', 'david', 'mark', 'alex', 'fred', 'rishi'];
+        _enVoice = voices.find(v => v.lang.startsWith('en') && !maleNames.some(m => v.name.toLowerCase().includes(m))) ||
+                   voices.find(v => v.lang === 'en-US');
+        return _enVoice;
+    }
+
     if (window.speechSynthesis) {
-        window.speechSynthesis.onvoiceschanged = function() { _cnVoice = null; _findMandarinVoice(); };
+        window.speechSynthesis.onvoiceschanged = function() { _cnVoice = null; _enVoice = null; _findMandarinVoice(); _findEnglishFemaleVoice(); };
         _findMandarinVoice();
+        _findEnglishFemaleVoice();
     }
     let notePopupTarget = null; // { lessonId, paraIdx }
 
@@ -356,7 +386,7 @@
                     <button class="nav-btn" id="speedBtn" title="朗读速度"><i class="fas fa-gauge-high"></i></button>
                     <div class="speed-panel" id="speedPanel">
                         <div class="font-panel-label">朗读速度</div>
-                        <input type="range" class="font-slider" id="speedSlider" min="5" max="20" step="1">
+                        <input type="range" class="font-slider" id="speedSlider" min="2" max="20" step="1">
                         <div class="font-size-preview" id="speedPreview">1.0x</div>
                     </div>
                 </div>
@@ -826,9 +856,11 @@
         const clean = _cleanText(word, 'en');
         if (!clean) return;
         const u = new SpeechSynthesisUtterance(clean);
+        const enVoice = _findEnglishFemaleVoice();
+        if (enVoice) u.voice = enVoice;
         u.lang = 'en-US';
-        u.rate = Math.max(0.4, speechRate * 0.8);
-        u.pitch = 1.1;
+        u.rate = Math.max(0.3, speechRate * 0.85);
+        u.pitch = 1.15;
         window.speechSynthesis.speak(u);
     };
 
@@ -841,15 +873,18 @@
         if (!clean) return;
         const u = new SpeechSynthesisUtterance(clean);
         if (lang === 'en') {
+            const enVoice = _findEnglishFemaleVoice();
+            if (enVoice) u.voice = enVoice;
             u.lang = 'en-US';
-            u.rate = Math.max(0.4, speechRate * 0.8);
+            u.rate = Math.max(0.3, speechRate * 0.85);
+            u.pitch = 1.15;
         } else {
             const cnVoice = _findMandarinVoice();
             if (cnVoice) u.voice = cnVoice;
             u.lang = 'zh-CN';
-            u.rate = Math.max(0.4, speechRate * 0.9);
+            u.rate = Math.max(0.3, speechRate * 0.9);
+            u.pitch = 1.1;
         }
-        u.pitch = 1.0;
 
         // Highlight while speaking
         el.classList.add('speaking');
@@ -867,7 +902,6 @@
         const paras = document.querySelectorAll(`#${bodyId} .text-paragraph`);
         if (!paras.length) return;
 
-        // 逐段拼接，段落间加自然停顿（空格）
         let fullText = '';
         paras.forEach(p => {
             const clean = _cleanText(p.getAttribute('data-text'), lang);
@@ -878,13 +912,17 @@
 
         const u = new SpeechSynthesisUtterance(fullText);
         if (lang === 'en') {
+            const enVoice = _findEnglishFemaleVoice();
+            if (enVoice) u.voice = enVoice;
             u.lang = 'en-US';
-            u.rate = Math.max(0.4, speechRate * 0.8);
+            u.rate = Math.max(0.3, speechRate * 0.85);
+            u.pitch = 1.15;
         } else {
             const cnVoice = _findMandarinVoice();
             if (cnVoice) u.voice = cnVoice;
             u.lang = 'zh-CN';
-            u.rate = Math.max(0.4, speechRate * 0.9);
+            u.rate = Math.max(0.3, speechRate * 0.9);
+            u.pitch = 1.1;
         }
         window.speechSynthesis.speak(u);
 

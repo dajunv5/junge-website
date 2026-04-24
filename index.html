@@ -12,527 +12,489 @@
 </head>
 <body>
 
-    <!-- 导航栏 -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-inner">
-            <a href="#" class="nav-logo">
+    <!-- ===== 顶部栏 ===== -->
+    <header class="top-bar" id="topBar">
+        <div class="top-bar-inner">
+            <a href="#" class="top-logo">
                 <span class="logo-icon"><i class="fas fa-book-open"></i></span>
-                <span class="logo-text">私人订制书窗</span>
+                <span class="logo-text">书窗</span>
             </a>
-            <ul class="nav-links">
-                <li><a href="#hero">首页</a></li>
-                <li class="has-dropdown">
-                    <a href="#books">书籍库 <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-menu">
-                        <a href="#cat-language"><i class="fas fa-language"></i> 语文/阅读</a>
-                        <a href="#cat-math"><i class="fas fa-calculator"></i> 数学</a>
-                        <a href="#cat-science"><i class="fas fa-flask"></i> 科学/自然</a>
-                        <a href="#cat-history"><i class="fas fa-landmark"></i> 历史/社会</a>
-                        <a href="#cat-geography"><i class="fas fa-globe-americas"></i> 地理/文化</a>
-                        <a href="#cat-nasa"><i class="fas fa-rocket"></i> NASA科普</a>
-                    </div>
-                </li>
-                <li><a href="#about">关于</a></li>
-                <li><a href="#contact">联系我们</a></li>
-            </ul>
-            <button class="nav-toggle" id="navToggle" aria-label="菜单">
-                <span></span><span></span><span></span>
-            </button>
+            <div class="search-box" id="searchBox">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="搜索书名、作者..." autocomplete="off">
+                <button class="search-clear" id="searchClear"><i class="fas fa-times"></i></button>
+            </div>
         </div>
+    </header>
+
+    <!-- ===== 轮播图 ===== -->
+    <section class="carousel-section">
+        <div class="carousel" id="carousel">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide active" data-index="0">
+                    <div class="slide-bg" style="background: linear-gradient(135deg, #2997ff 0%, #5e5ce6 100%);"></div>
+                    <div class="slide-content">
+                        <span class="slide-badge">本周推荐</span>
+                        <h2>麦加菲启蒙读本</h2>
+                        <p>美国百年经典教材，从零开始学英语</p>
+                        <a href="reader.html?book=primer&lesson=1" class="slide-btn">立即阅读</a>
+                    </div>
+                    <div class="slide-icon"><i class="fas fa-book-reader"></i></div>
+                </div>
+                <div class="carousel-slide" data-index="1">
+                    <div class="slide-bg" style="background: linear-gradient(135deg, #ff9f0a 0%, #ff6b35 100%);"></div>
+                    <div class="slide-content">
+                        <span class="slide-badge">科学启蒙</span>
+                        <h2>科学故事书</h2>
+                        <p>法布尔写给孩子的科学课，生动有趣</p>
+                        <a href="#cat-science" class="slide-btn">了解更多</a>
+                    </div>
+                    <div class="slide-icon"><i class="fas fa-flask"></i></div>
+                </div>
+                <div class="carousel-slide" data-index="2">
+                    <div class="slide-bg" style="background: linear-gradient(135deg, #30d158 0%, #34c759 100%);"></div>
+                    <div class="slide-content">
+                        <span class="slide-badge">NASA授权</span>
+                        <h2>太空科普系列</h2>
+                        <p>美国NASA官方出品，探索宇宙奥秘</p>
+                        <a href="#cat-nasa" class="slide-btn">探索宇宙</a>
+                    </div>
+                    <div class="slide-icon"><i class="fas fa-rocket"></i></div>
+                </div>
+            </div>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+    </section>
+
+    <!-- ===== 快速分类入口 ===== -->
+    <section class="quick-cats">
+        <div class="quick-cats-inner">
+            <a href="#cat-language" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #2997ff;"><i class="fas fa-language"></i></div>
+                <span>语文</span>
+            </a>
+            <a href="#cat-math" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #30d158;"><i class="fas fa-calculator"></i></div>
+                <span>数学</span>
+            </a>
+            <a href="#cat-science" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #ff9f0a;"><i class="fas fa-flask"></i></div>
+                <span>科学</span>
+            </a>
+            <a href="#cat-history" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #bf5af2;"><i class="fas fa-landmark"></i></div>
+                <span>历史</span>
+            </a>
+            <a href="#cat-geography" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #0077ed;"><i class="fas fa-globe-americas"></i></div>
+                <span>地理</span>
+            </a>
+            <a href="#cat-nasa" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #32d74b;"><i class="fas fa-rocket"></i></div>
+                <span>NASA</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== 内容信息流 ===== -->
+    <main class="content-feed" id="contentFeed">
+        <!-- 语文/阅读 -->
+        <div class="feed-category" id="cat-language">
+            <div class="feed-cat-header">
+                <h3><i class="fas fa-language"></i> 语文 / 阅读</h3>
+                <span class="feed-cat-count">4本</span>
+            </div>
+            <div class="feed-cards">
+                <a href="reader.html?book=primer&lesson=1" class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #2997ff 0%, #5e5ce6 100%);">
+                        <i class="fas fa-book"></i>
+                        <span class="feed-grade">K-1</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>McGuffey's Primer</h4>
+                        <p class="feed-title-cn">麦加菲启蒙读本</p>
+                        <p class="feed-desc">美国最经典的启蒙教材，从字母开始，循序渐进学习基础英语阅读</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> W.H. McGuffey</span>
+                            <span><i class="fas fa-clock"></i> 约3小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="reader.html?book=first&lesson=1" class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #5e5ce6 0%, #bf5af2 100%);">
+                        <i class="fas fa-book"></i>
+                        <span class="feed-grade">1-2</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>McGuffey's First Reader</h4>
+                        <p class="feed-title-cn">麦加菲第一读本</p>
+                        <p class="feed-desc">在启蒙基础上进一步扩展词汇量，引入短文和简单故事</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> W.H. McGuffey</span>
+                            <span><i class="fas fa-clock"></i> 约5小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="reader.html?book=second&lesson=1" class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #bf5af2 0%, #ff375f 100%);">
+                        <i class="fas fa-book"></i>
+                        <span class="feed-grade">2-3</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>McGuffey's Second Reader</h4>
+                        <p class="feed-title-cn">麦加菲第二读本</p>
+                        <p class="feed-desc">精选文学选篇，培养阅读理解能力和文学素养</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> W.H. McGuffey</span>
+                            <span><i class="fas fa-clock"></i> 约8小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="reader.html?book=third&lesson=1" class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #ff375f 0%, #ff453a 100%);">
+                        <i class="fas fa-book"></i>
+                        <span class="feed-grade">3-4</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>McGuffey's Third Reader</h4>
+                        <p class="feed-title-cn">麦加菲第三读本</p>
+                        <p class="feed-desc">进阶阅读，涵盖散文、诗歌、历史故事等多种文体</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> W.H. McGuffey</span>
+                            <span><i class="fas fa-clock"></i> 约10小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 数学 -->
+        <div class="feed-category" id="cat-math">
+            <div class="feed-cat-header">
+                <h3><i class="fas fa-calculator"></i> 数学</h3>
+                <span class="feed-cat-count">2本</span>
+            </div>
+            <div class="feed-cards">
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #30d158 0%, #34c759 100%);">
+                        <i class="fas fa-calculator"></i>
+                        <span class="feed-grade">1-2</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>Ray's New Primary Arithmetic</h4>
+                        <p class="feed-title-cn">雷氏初级算术</p>
+                        <p class="feed-desc">从数字认知到加减法运算，打好数学基础</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> Joseph Ray</span>
+                            <span><i class="fas fa-clock"></i> 约4小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #34c759 0%, #30d158 100%);">
+                        <i class="fas fa-calculator"></i>
+                        <span class="feed-grade">3-4</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>Ray's New Intellectual Arithmetic</h4>
+                        <p class="feed-title-cn">雷氏心智算术</p>
+                        <p class="feed-desc">纯心算训练，不用纸笔，锻炼数学思维</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> Joseph Ray</span>
+                            <span><i class="fas fa-clock"></i> 约6小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 科学/自然 -->
+        <div class="feed-category" id="cat-science">
+            <div class="feed-cat-header">
+                <h3><i class="fas fa-flask"></i> 科学 / 自然</h3>
+                <span class="feed-cat-count">4本</span>
+            </div>
+            <div class="feed-cards">
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #ff9f0a 0%, #ff6b35 100%);">
+                        <i class="fas fa-flask"></i>
+                        <span class="feed-grade">3-5</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>The Story Book of Science</h4>
+                        <p class="feed-title-cn">科学故事书</p>
+                        <p class="feed-desc">法布尔以故事形式讲述科学知识，引人入胜</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> Jean-Henri Fabre</span>
+                            <span><i class="fas fa-clock"></i> 约12小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #ff6b35 0%, #e85d04 100%);">
+                        <i class="fas fa-frog"></i>
+                        <span class="feed-grade">2-4</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>Among the Pond People</h4>
+                        <p class="feed-title-cn">池塘里的居民</p>
+                        <p class="feed-desc">走进池塘生态，认识青蛙、蜻蜓等小动物的生活</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> Clara D. Pierson</span>
+                            <span><i class="fas fa-clock"></i> 约6小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #ff453a 0%, #ff375f 100%);">
+                        <i class="fas fa-paw"></i>
+                        <span class="feed-grade">3-5</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>The Burgess Animal Book</h4>
+                        <p class="feed-title-cn">伯吉斯动物书</p>
+                        <p class="feed-desc">以故事形式介绍北美动物，兼具趣味与知识</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> Thornton W. Burgess</span>
+                            <span><i class="fas fa-clock"></i> 约10小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #e85d04 0%, #ff9f0a 100%);">
+                        <i class="fas fa-tree"></i>
+                        <span class="feed-grade">2-4</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>Among the Forest People</h4>
+                        <p class="feed-title-cn">森林里的居民</p>
+                        <p class="feed-desc">走进森林，了解鸟儿、松鼠和其他森林生物</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> Clara D. Pierson</span>
+                            <span><i class="fas fa-clock"></i> 约6小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 历史/社会 -->
+        <div class="feed-category" id="cat-history">
+            <div class="feed-cat-header">
+                <h3><i class="fas fa-landmark"></i> 历史 / 社会</h3>
+                <span class="feed-cat-count">2本</span>
+            </div>
+            <div class="feed-cards">
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #bf5af2 0%, #9b59b6 100%);">
+                        <i class="fas fa-landmark"></i>
+                        <span class="feed-grade">2-3</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>Stories of Great Americans</h4>
+                        <p class="feed-title-cn">伟人故事（少儿版）</p>
+                        <p class="feed-desc">用简单语言讲述华盛顿、林肯等伟人的故事</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> Edward Eggleston</span>
+                            <span><i class="fas fa-clock"></i> 约4小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #9b59b6 0%, #bf5af2 100%);">
+                        <i class="fas fa-landmark"></i>
+                        <span class="feed-grade">4-6</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>This Country of Ours</h4>
+                        <p class="feed-title-cn">我们的国家</p>
+                        <p class="feed-desc">美国历史通识读物，从发现新大陆到建国</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> H.E. Marshall</span>
+                            <span><i class="fas fa-clock"></i> 约15小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 地理/文化 -->
+        <div class="feed-category" id="cat-geography">
+            <div class="feed-cat-header">
+                <h3><i class="fas fa-globe-americas"></i> 地理 / 文化</h3>
+                <span class="feed-cat-count">2本</span>
+            </div>
+            <div class="feed-cards">
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #2997ff 0%, #0077ed 100%);">
+                        <i class="fas fa-globe-americas"></i>
+                        <span class="feed-grade">1-3</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>Home Geography for Primary Grades</h4>
+                        <p class="feed-title-cn">小学家庭地理</p>
+                        <p class="feed-desc">从身边环境认识地理概念，培养空间思维</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> C.C. Long</span>
+                            <span><i class="fas fa-clock"></i> 约3小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #0077ed 0%, #2997ff 100%);">
+                        <i class="fas fa-globe-asia"></i>
+                        <span class="feed-grade">2-4</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>The Seven Little Sisters</h4>
+                        <p class="feed-title-cn">七个小姐妹</p>
+                        <p class="feed-desc">以七个女孩代表七大洲，讲述世界人文地理</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> Jane Andrews</span>
+                            <span><i class="fas fa-clock"></i> 约5小时</span>
+                            <span class="feed-tag pd">公共领域</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NASA科普 -->
+        <div class="feed-category" id="cat-nasa">
+            <div class="feed-cat-header">
+                <h3><i class="fas fa-rocket"></i> NASA 科普</h3>
+                <span class="feed-cat-count">3本</span>
+            </div>
+            <div class="feed-cards">
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #30d158 0%, #32d74b 100%);">
+                        <i class="fas fa-earth-americas"></i>
+                        <span class="feed-grade">K-4</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>Elementary GLOBE: Earth System</h4>
+                        <p class="feed-title-cn">地球系统科学故事书</p>
+                        <p class="feed-desc">NASA官方出品，带孩子认识地球的各个系统</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> NASA/GLOBE</span>
+                            <span><i class="fas fa-clock"></i> 约2小时</span>
+                            <span class="feed-tag gov">政府出版物</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #32d74b 0%, #63e6be 100%);">
+                        <i class="fas fa-cloud"></i>
+                        <span class="feed-grade">K-4</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>Elementary GLOBE: Clouds</h4>
+                        <p class="feed-title-cn">云和天气故事书</p>
+                        <p class="feed-desc">认识各种云的形态，了解天气变化的奥秘</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> NASA/GLOBE</span>
+                            <span><i class="fas fa-clock"></i> 约2小时</span>
+                            <span class="feed-tag gov">政府出版物</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed-card">
+                    <div class="feed-cover" style="background: linear-gradient(135deg, #63e6be 0%, #30d158 100%);">
+                        <i class="fas fa-rocket"></i>
+                        <span class="feed-grade">K-4</span>
+                    </div>
+                    <div class="feed-body">
+                        <h4>NASA Space Activity Book</h4>
+                        <p class="feed-title-cn">NASA太空活动书</p>
+                        <p class="feed-desc">太空主题互动书，涂色、迷宫、科普一体</p>
+                        <div class="feed-meta">
+                            <span><i class="fas fa-user"></i> NASA</span>
+                            <span><i class="fas fa-clock"></i> 约1.5小时</span>
+                            <span class="feed-tag gov">政府出版物</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 搜索无结果提示 -->
+        <div class="feed-empty" id="feedEmpty" style="display:none;">
+            <i class="fas fa-search"></i>
+            <p>没有找到相关书籍</p>
+        </div>
+    </main>
+
+    <!-- ===== 关于 ===== -->
+    <section class="section about-section" id="about">
+        <h2>关于书窗</h2>
+        <p>私人订制书窗精选美国经典教育书籍，翻译成中文，为中国家庭打开一扇了解欧美教育的窗口。所有书籍均为公共领域或开放授权，翻译发布合法合规。</p>
+        <div class="about-features">
+            <div class="about-feat">
+                <i class="fas fa-gavel"></i>
+                <span>合法授权</span>
+            </div>
+            <div class="about-feat">
+                <i class="fas fa-language"></i>
+                <span>精心翻译</span>
+            </div>
+            <div class="about-feat">
+                <i class="fas fa-child"></i>
+                <span>分级阅读</span>
+            </div>
+            <div class="about-feat">
+                <i class="fas fa-hand-holding-heart"></i>
+                <span>永久免费</span>
+            </div>
+        </div>
+        <div class="about-contact">
+            <a href="mailto:735097808@qq.com"><i class="fas fa-envelope"></i> 735097808@qq.com</a>
+            <a href="#" class="wechat-trigger" id="wechatTrigger"><i class="fab fa-weixin"></i> 微信: minjun100856</a>
+        </div>
+    </section>
+
+    <!-- ===== 微信二维码弹窗 ===== -->
+    <div class="wechat-modal" id="wechatModal">
+        <div class="wechat-modal-inner">
+            <button class="wechat-modal-close" id="wechatModalClose">&times;</button>
+            <div class="wechat-qr">
+                <img src="https://s41.ax1x.com/2026/04/24/peWNqAO.jpg" alt="微信二维码">
+            </div>
+            <div class="wechat-id-badge">
+                <i class="fab fa-weixin"></i>
+                <span>minjun100856</span>
+            </div>
+            <p>扫码或搜索微信号添加好友</p>
+        </div>
+    </div>
+
+    <!-- ===== 底部固定导航栏 ===== -->
+    <nav class="bottom-nav" id="bottomNav">
+        <a href="#top" class="bottom-nav-item active">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="#contentFeed" class="bottom-nav-item">
+            <i class="fas fa-th-large"></i>
+            <span>分类</span>
+        </a>
+        <a href="#about" class="bottom-nav-item">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </a>
     </nav>
-
-    <!-- 移动端菜单 -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <span class="logo-icon"><i class="fas fa-book-open"></i></span>
-            <button class="mobile-close" id="mobileClose">&times;</button>
-        </div>
-        <a href="#hero">首页</a>
-        <a href="#books" class="mobile-toolbox-trigger">书籍库 <i class="fas fa-chevron-down"></i></a>
-        <div class="mobile-submenu">
-            <a href="#cat-language"><i class="fas fa-language"></i> 语文/阅读</a>
-            <a href="#cat-math"><i class="fas fa-calculator"></i> 数学</a>
-            <a href="#cat-science"><i class="fas fa-flask"></i> 科学/自然</a>
-            <a href="#cat-history"><i class="fas fa-landmark"></i> 历史/社会</a>
-            <a href="#cat-geography"><i class="fas fa-globe-americas"></i> 地理/文化</a>
-            <a href="#cat-nasa"><i class="fas fa-rocket"></i> NASA科普</a>
-        </div>
-        <a href="#about">关于</a>
-        <a href="#contact">联系我们</a>
-    </div>
-    <div class="overlay" id="overlay"></div>
-
-    <!-- 右上角圆形时钟 -->
-    <div class="floating-clock" id="floatingClock">
-        <svg viewBox="0 0 200 200" class="analog-clock">
-            <circle cx="100" cy="100" r="96" class="clock-outer-ring"/>
-            <circle cx="100" cy="100" r="90" class="clock-inner-bg"/>
-            <g class="clock-ticks" id="clockTicks"></g>
-            <g class="clock-numbers" id="clockNumbers"></g>
-            <line x1="100" y1="100" x2="100" y2="50" class="clock-hand-hour" id="hourHand"/>
-            <line x1="100" y1="100" x2="100" y2="30" class="clock-hand-minute" id="minuteHand"/>
-            <line x1="100" y1="110" x2="100" y2="26" class="clock-hand-second" id="secondHand"/>
-            <circle cx="100" cy="100" r="4" class="clock-center-dot"/>
-            <circle cx="100" cy="100" r="2" class="clock-center-inner"/>
-        </svg>
-        <div class="floating-clock-date" id="floatingClockDate">1月1日 周一</div>
-    </div>
-
-    <!-- Hero区域 -->
-    <section class="hero" id="hero">
-        <div class="hero-bg-animation">
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="orb orb-3"></div>
-        </div>
-        <div class="hero-content">
-            <p class="hero-eyebrow">欧美经典 · 中文译读</p>
-            <h1 class="hero-title">私人订制书窗</h1>
-            <p class="hero-subtitle">精选美国小学经典教材与读物，翻译成中文，让中国孩子看见世界</p>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <span class="hero-stat-num">15</span>
-                    <span class="hero-stat-label">精选书目</span>
-                </div>
-                <div class="hero-stat-divider"></div>
-                <div class="hero-stat">
-                    <span class="hero-stat-num">5</span>
-                    <span class="hero-stat-label">学科门类</span>
-                </div>
-                <div class="hero-stat-divider"></div>
-                <div class="hero-stat">
-                    <span class="hero-stat-num">K-6</span>
-                    <span class="hero-stat-label">年级覆盖</span>
-                </div>
-            </div>
-            <div class="hero-actions">
-                <a href="#books" class="btn btn-primary">浏览书籍库</a>
-                <a href="#about" class="btn btn-secondary">了解更多</a>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse"><div class="wheel"></div></div>
-            <div class="swipe-hint"><i class="fas fa-hand-pointer"></i> <span>向上滑动</span></div>
-            <span class="scroll-label">向下浏览</span>
-        </div>
-    </section>
-
-    <!-- 书籍库 -->
-    <section class="section books" id="books">
-        <div class="container">
-            <p class="section-eyebrow">书籍库</p>
-            <h2 class="section-title">经典译丛</h2>
-            <p class="section-desc">来自美国的公共领域经典教材，精心翻译，免费阅读</p>
-
-            <!-- 语文/阅读 -->
-            <div class="book-category" id="cat-language">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fas fa-language"></i></div>
-                    <h3>语文 / 阅读</h3>
-                    <span class="category-badge">4本</span>
-                </div>
-                <div class="books-row">
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #2997ff;">
-                            <i class="fas fa-book"></i>
-                            <span class="book-grade">K-1</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>McGuffey's Primer</h4>
-                            <p class="book-title-cn">麦加菲启蒙读本</p>
-                            <p class="book-meta">W.H. McGuffey · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">启蒙</span>
-                            </div>
-                        </div>
-                        <a href="reader.html?book=primer&lesson=1" class="book-read-link">开始阅读 <i class="fas fa-book-reader"></i></a>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #5e5ce6;">
-                            <i class="fas fa-book"></i>
-                            <span class="book-grade">1-2</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>McGuffey's First Reader</h4>
-                            <p class="book-title-cn">麦加菲第一读本</p>
-                            <p class="book-meta">W.H. McGuffey · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">分级阅读</span>
-                            </div>
-                        </div>
-                        <div class="book-links-row">
-                            <a href="reader.html?book=first&lesson=1" class="book-read-link">开始阅读 <i class="fas fa-book-reader"></i></a>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #bf5af2;">
-                            <i class="fas fa-book"></i>
-                            <span class="book-grade">2-3</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>McGuffey's Second Reader</h4>
-                            <p class="book-title-cn">麦加菲第二读本</p>
-                            <p class="book-meta">W.H. McGuffey · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">文学选篇</span>
-                            </div>
-                        </div>
-                        <div class="book-links-row">
-                            <a href="reader.html?book=second&lesson=1" class="book-read-link">开始阅读 <i class="fas fa-book-reader"></i></a>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #ff375f;">
-                            <i class="fas fa-book"></i>
-                            <span class="book-grade">3-4</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>McGuffey's Third Reader</h4>
-                            <p class="book-title-cn">麦加菲第三读本</p>
-                            <p class="book-meta">W.H. McGuffey · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">进阶阅读</span>
-                            </div>
-                        </div>
-                        <div class="book-links-row">
-                            <a href="reader.html?book=third&lesson=1" class="book-read-link">开始阅读 <i class="fas fa-book-reader"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 数学 -->
-            <div class="book-category" id="cat-math">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fas fa-calculator"></i></div>
-                    <h3>数学</h3>
-                    <span class="category-badge">2本</span>
-                </div>
-                <div class="books-row">
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #30d158;">
-                            <i class="fas fa-calculator"></i>
-                            <span class="book-grade">1-2</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>Ray's New Primary Arithmetic</h4>
-                            <p class="book-title-cn">雷氏初级算术</p>
-                            <p class="book-meta">Joseph Ray · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">基础算术</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #34c759;">
-                            <i class="fas fa-calculator"></i>
-                            <span class="book-grade">3-4</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>Ray's New Intellectual Arithmetic</h4>
-                            <p class="book-title-cn">雷氏心智算术</p>
-                            <p class="book-meta">Joseph Ray · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">心算训练</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 科学/自然 -->
-            <div class="book-category" id="cat-science">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fas fa-flask"></i></div>
-                    <h3>科学 / 自然</h3>
-                    <span class="category-badge">4本</span>
-                </div>
-                <div class="books-row">
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #ff9f0a;">
-                            <i class="fas fa-flask"></i>
-                            <span class="book-grade">3-5</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>The Story Book of Science</h4>
-                            <p class="book-title-cn">科学故事书</p>
-                            <p class="book-meta">Jean-Henri Fabre · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">科学启蒙</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #ff6b35;">
-                            <i class="fas fa-frog"></i>
-                            <span class="book-grade">2-4</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>Among the Pond People</h4>
-                            <p class="book-title-cn">池塘里的居民</p>
-                            <p class="book-meta">Clara D. Pierson · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">生态故事</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #ff453a;">
-                            <i class="fas fa-paw"></i>
-                            <span class="book-grade">3-5</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>The Burgess Animal Book</h4>
-                            <p class="book-title-cn">伯吉斯动物书</p>
-                            <p class="book-meta">Thornton W. Burgess · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">动物科学</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #e85d04;">
-                            <i class="fas fa-tree"></i>
-                            <span class="book-grade">2-4</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>Among the Forest People</h4>
-                            <p class="book-title-cn">森林里的居民</p>
-                            <p class="book-meta">Clara D. Pierson · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">森林生态</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 历史/社会 -->
-            <div class="book-category" id="cat-history">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fas fa-landmark"></i></div>
-                    <h3>历史 / 社会</h3>
-                    <span class="category-badge">2本</span>
-                </div>
-                <div class="books-row">
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #bf5af2;">
-                            <i class="fas fa-landmark"></i>
-                            <span class="book-grade">2-3</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>Stories of Great Americans</h4>
-                            <p class="book-title-cn">伟人故事（少儿版）</p>
-                            <p class="book-meta">Edward Eggleston · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">美国历史</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #9b59b6;">
-                            <i class="fas fa-landmark"></i>
-                            <span class="book-grade">4-6</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>This Country of Ours</h4>
-                            <p class="book-title-cn">我们的国家</p>
-                            <p class="book-meta">H.E. Marshall · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">通史</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 地理/文化 -->
-            <div class="book-category" id="cat-geography">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fas fa-globe-americas"></i></div>
-                    <h3>地理 / 文化</h3>
-                    <span class="category-badge">2本</span>
-                </div>
-                <div class="books-row">
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #2997ff;">
-                            <i class="fas fa-globe-americas"></i>
-                            <span class="book-grade">1-3</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>Home Geography for Primary Grades</h4>
-                            <p class="book-title-cn">小学家庭地理</p>
-                            <p class="book-meta">C.C. Long · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">地理启蒙</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #0077ed;">
-                            <i class="fas fa-globe-asia"></i>
-                            <span class="book-grade">2-4</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>The Seven Little Sisters</h4>
-                            <p class="book-title-cn">七个小姐妹</p>
-                            <p class="book-meta">Jane Andrews · 公共领域</p>
-                            <div class="book-tags">
-                                <span class="book-tag pd">公共领域</span>
-                                <span class="book-tag">人文地理</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- NASA科普 -->
-            <div class="book-category" id="cat-nasa">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fas fa-rocket"></i></div>
-                    <h3>NASA 科普系列</h3>
-                    <span class="category-badge">3本</span>
-                </div>
-                <div class="books-row">
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #30d158;">
-                            <i class="fas fa-earth-americas"></i>
-                            <span class="book-grade">K-4</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>Elementary GLOBE: Earth System</h4>
-                            <p class="book-title-cn">地球系统科学故事书</p>
-                            <p class="book-meta">NASA/GLOBE · 美国政府出版物</p>
-                            <div class="book-tags">
-                                <span class="book-tag gov">政府出版物</span>
-                                <span class="book-tag">地球科学</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #32d74b;">
-                            <i class="fas fa-cloud"></i>
-                            <span class="book-grade">K-4</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>Elementary GLOBE: Clouds</h4>
-                            <p class="book-title-cn">云和天气故事书</p>
-                            <p class="book-meta">NASA/GLOBE · 美国政府出版物</p>
-                            <div class="book-tags">
-                                <span class="book-tag gov">政府出版物</span>
-                                <span class="book-tag">气象科学</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover" style="--cover-color: #63e6be;">
-                            <i class="fas fa-rocket"></i>
-                            <span class="book-grade">K-4</span>
-                        </div>
-                        <div class="book-info">
-                            <h4>NASA Space Activity Book</h4>
-                            <p class="book-title-cn">NASA太空活动书</p>
-                            <p class="book-meta">NASA · 美国政府出版物</p>
-                            <div class="book-tags">
-                                <span class="book-tag gov">政府出版物</span>
-                                <span class="book-tag">太空科普</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- 关于 -->
-    <section class="section about" id="about">
-        <div class="container">
-            <p class="section-eyebrow">关于书窗</p>
-            <h2 class="section-title">让中国孩子看见世界</h2>
-            <p class="section-desc">私人订制书窗精选美国经典教育书籍，翻译成中文，为中国家庭打开一扇了解欧美教育的窗口。</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-gavel"></i></div>
-                    <h3>合法授权</h3>
-                    <p>所有书籍均为公共领域或开放授权，翻译发布合法合规</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-language"></i></div>
-                    <h3>精心翻译</h3>
-                    <p>保留原文精髓，适配中文表达习惯，双语对照阅读</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-child"></i></div>
-                    <h3>分级阅读</h3>
-                    <p>覆盖 K-6 年级，按科目分类，精准匹配学习阶段</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                    <h3>免费阅读</h3>
-                    <p>公共领域资源永久免费，让优质教育触手可及</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 联系 -->
-    <section class="section contact" id="contact">
-        <div class="container">
-            <p class="section-eyebrow">联系我们</p>
-            <h2 class="section-title">合作与反馈</h2>
-            <p class="section-desc">翻译建议、版权合作、资源推荐，欢迎联系。</p>
-            <div class="contact-links">
-                <a href="mailto:735097808@qq.com" class="contact-card">
-                    <i class="fas fa-envelope"></i>
-                    <span>735097808@qq.com</span>
-                </a>
-                <a href="#" class="contact-card wechat-card">
-                    <i class="fab fa-weixin"></i>
-                    <span>微信</span>
-                    <div class="wechat-tooltip">
-                        <div class="wechat-tooltip-arrow"></div>
-                        <div class="wechat-qr">
-                            <img src="https://s41.ax1x.com/2026/04/24/peWNqAO.jpg" alt="微信二维码" class="wechat-qr-img" />
-                        </div>
-                        <div class="wechat-id">
-                            <i class="fab fa-weixin"></i>
-                            <span>minjun100856</span>
-                        </div>
-                        <p class="wechat-hint">扫码或搜索微信号添加好友</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-inner">
-                <div class="footer-brand">
-                    <span class="logo-icon"><i class="fas fa-book-open"></i></span>
-                    <span>私人订制书窗</span>
-                </div>
-                <p class="footer-copy">&copy; 2026 私人订制书窗 · 欧美经典 · 中文译读</p>
-                <p class="footer-note">所有书籍均为公共领域或开放授权，翻译发布合法合规</p>
-            </div>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
