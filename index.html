@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>军哥的私人订制</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- 导航栏 - 苹果毛玻璃风格 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">J</span>
+                <span class="logo-text">军哥的私人订制</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero">首页</a></li>
+                <li><a href="#about">关于军哥</a></li>
+                <li class="has-dropdown">
+                    <a href="#toolbox">军哥的工具箱 <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#tool-time"><i class="fas fa-clock"></i> 时间工具</a>
+                        <a href="#tool-calc"><i class="fas fa-calculator"></i> 计算器</a>
+                        <a href="#tool-notes"><i class="fas fa-sticky-note"></i> 速记本</a>
+                        <a href="#tool-color"><i class="fas fa-palette"></i> 取色器</a>
+                        <a href="#tool-base64"><i class="fas fa-code"></i> Base64编解码</a>
+                        <a href="#tool-json"><i class="fas fa-brackets-curly"></i> JSON格式化</a>
+                    </div>
+                </li>
+                <li><a href="#gallery">作品集</a></li>
+                <li><a href="#contact">联系军哥</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 移动端侧边菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span class="logo-icon">J</span>
+            <button class="mobile-close" id="mobileClose">&times;</button>
+        </div>
+        <a href="#hero">首页</a>
+        <a href="#about">关于军哥</a>
+        <a href="#toolbox" class="mobile-toolbox-trigger">军哥的工具箱 <i class="fas fa-chevron-down"></i></a>
+        <div class="mobile-submenu">
+            <a href="#tool-time"><i class="fas fa-clock"></i> 时间工具</a>
+            <a href="#tool-calc"><i class="fas fa-calculator"></i> 计算器</a>
+            <a href="#tool-notes"><i class="fas fa-sticky-note"></i> 速记本</a>
+            <a href="#tool-color"><i class="fas fa-palette"></i> 取色器</a>
+            <a href="#tool-base64"><i class="fas fa-code"></i> Base64编解码</a>
+            <a href="#tool-json"><i class="fas fa-brackets-curly"></i> JSON格式化</a>
+        </div>
+        <a href="#gallery">作品集</a>
+        <a href="#contact">联系军哥</a>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- 右上角固定圆形时钟 -->
+    <div class="floating-clock" id="floatingClock">
+        <svg viewBox="0 0 200 200" class="analog-clock">
+            <!-- 外圈 -->
+            <circle cx="100" cy="100" r="96" class="clock-outer-ring"/>
+            <circle cx="100" cy="100" r="90" class="clock-inner-bg"/>
+            <!-- 刻度 - 由JS生成 -->
+            <g class="clock-ticks" id="clockTicks"></g>
+            <!-- 数字 -->
+            <g class="clock-numbers" id="clockNumbers"></g>
+            <!-- 时针 -->
+            <line x1="100" y1="100" x2="100" y2="50" class="clock-hand-hour" id="hourHand"/>
+            <!-- 分针 -->
+            <line x1="100" y1="100" x2="100" y2="30" class="clock-hand-minute" id="minuteHand"/>
+            <!-- 秒针 -->
+            <line x1="100" y1="110" x2="100" y2="26" class="clock-hand-second" id="secondHand"/>
+            <!-- 中心点 -->
+            <circle cx="100" cy="100" r="4" class="clock-center-dot"/>
+            <circle cx="100" cy="100" r="2" class="clock-center-inner"/>
+        </svg>
+        <div class="floating-clock-date" id="floatingClockDate">1月1日 周一</div>
+    </div>
+
+    <!-- Hero区域 -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-animation">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">欢迎来到</p>
+            <h1 class="hero-title">军哥的私人订制</h1>
+            <p class="hero-subtitle">计算机网络 · 2013届 · 十三年匠心沉淀</p>
+
+            <div class="hero-actions">
+                <a href="#toolbox" class="btn btn-primary">探索工具箱</a>
+                <a href="#about" class="btn btn-secondary">了解更多</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>向下滚动</span>
+        </div>
+    </section>
+
+    <!-- 关于军哥 -->
+    <section class="section about" id="about">
+        <div class="container">
+            <p class="section-eyebrow">关于</p>
+            <h2 class="section-title">十三年，一步一个脚印</h2>
+            <p class="section-desc">2013年，计算机网络专业毕业，用一行行代码编织自己的数字世界。<br>从毕业作品到私人订制，技术的温度从未改变。</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" data-target="13">0</span>
+                    <span class="stat-unit">年</span>
+                    <span class="stat-label">从业经验</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-target="365">0</span>
+                    <span class="stat-unit">天</span>
+                    <span class="stat-label">全年无休的热爱</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-target="1000">0</span>
+                    <span class="stat-unit">+</span>
+                    <span class="stat-label">解决问题</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-target="1">0</span>
+                    <span class="stat-unit"></span>
+                    <span class="stat-label">不变的初心</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 军哥的工具箱 -->
+    <section class="section toolbox" id="toolbox">
+        <div class="container">
+            <p class="section-eyebrow">军哥的工具箱</p>
+            <h2 class="section-title">为效率而生</h2>
+            <p class="section-desc">精选实用工具，军哥亲自打磨，开箱即用。</p>
+
+            <div class="tools-grid">
+                <!-- 时间工具 -->
+                <div class="tool-card" id="tool-time">
+                    <div class="tool-icon"><i class="fas fa-clock"></i></div>
+                    <h3>时间工具</h3>
+                    <p>精确到毫秒的时间显示，支持多时区转换与倒计时</p>
+                    <div class="tool-widget">
+                        <div class="mini-clock" id="miniClock">--:--:--</div>
+                        <div class="timezone-row">
+                            <span>北京</span><span id="tzBeijing">--:--</span>
+                        </div>
+                        <div class="timezone-row">
+                            <span>纽约</span><span id="tzNewYork">--:--</span>
+                        </div>
+                        <div class="timezone-row">
+                            <span>伦敦</span><span id="tzLondon">--:--</span>
+                        </div>
+                        <div class="timezone-row">
+                            <span>东京</span><span id="tzTokyo">--:--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 计算器 -->
+                <div class="tool-card" id="tool-calc">
+                    <div class="tool-icon"><i class="fas fa-calculator"></i></div>
+                    <h3>计算器</h3>
+                    <p>简洁高效的在线计算器，支持基础运算</p>
+                    <div class="tool-widget">
+                        <div class="calc-display" id="calcDisplay">0</div>
+                        <div class="calc-grid">
+                            <button class="calc-btn calc-fn" onclick="calcInput('C')">C</button>
+                            <button class="calc-btn calc-fn" onclick="calcInput('±')">±</button>
+                            <button class="calc-btn calc-fn" onclick="calcInput('%')">%</button>
+                            <button class="calc-btn calc-op" onclick="calcInput('÷')">÷</button>
+                            <button class="calc-btn" onclick="calcInput('7')">7</button>
+                            <button class="calc-btn" onclick="calcInput('8')">8</button>
+                            <button class="calc-btn" onclick="calcInput('9')">9</button>
+                            <button class="calc-btn calc-op" onclick="calcInput('×')">×</button>
+                            <button class="calc-btn" onclick="calcInput('4')">4</button>
+                            <button class="calc-btn" onclick="calcInput('5')">5</button>
+                            <button class="calc-btn" onclick="calcInput('6')">6</button>
+                            <button class="calc-btn calc-op" onclick="calcInput('-')">−</button>
+                            <button class="calc-btn" onclick="calcInput('1')">1</button>
+                            <button class="calc-btn" onclick="calcInput('2')">2</button>
+                            <button class="calc-btn" onclick="calcInput('3')">3</button>
+                            <button class="calc-btn calc-op" onclick="calcInput('+')">+</button>
+                            <button class="calc-btn calc-zero" onclick="calcInput('0')">0</button>
+                            <button class="calc-btn" onclick="calcInput('.')">.</button>
+                            <button class="calc-btn calc-eq" onclick="calcInput('=')">=</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 速记本 -->
+                <div class="tool-card" id="tool-notes">
+                    <div class="tool-icon"><i class="fas fa-sticky-note"></i></div>
+                    <h3>速记本</h3>
+                    <p>随手记录灵感，数据自动保存到本地</p>
+                    <div class="tool-widget">
+                        <textarea class="note-area" id="noteArea" placeholder="在这里记录你的想法..."></textarea>
+                        <div class="note-footer">
+                            <span class="note-count" id="noteCount">0 字</span>
+                            <button class="note-save" onclick="saveNote()">保存</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 取色器 -->
+                <div class="tool-card" id="tool-color">
+                    <div class="tool-icon"><i class="fas fa-palette"></i></div>
+                    <h3>取色器</h3>
+                    <p>选择颜色，获取 HEX / RGB / HSL 值</p>
+                    <div class="tool-widget">
+                        <div class="color-picker-area">
+                            <input type="color" id="colorPicker" value="#2997ff" class="color-input">
+                            <div class="color-preview" id="colorPreview" style="background:#2997ff"></div>
+                        </div>
+                        <div class="color-values">
+                            <div class="color-val-row">
+                                <span class="color-label">HEX</span>
+                                <span class="color-value" id="colorHex">#2997ff</span>
+                            </div>
+                            <div class="color-val-row">
+                                <span class="color-label">RGB</span>
+                                <span class="color-value" id="colorRgb">41, 151, 255</span>
+                            </div>
+                            <div class="color-val-row">
+                                <span class="color-label">HSL</span>
+                                <span class="color-value" id="colorHsl">210°, 100%, 58%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Base64编解码 -->
+                <div class="tool-card" id="tool-base64">
+                    <div class="tool-icon"><i class="fas fa-code"></i></div>
+                    <h3>Base64 编解码</h3>
+                    <p>快速进行 Base64 编码与解码转换</p>
+                    <div class="tool-widget">
+                        <textarea class="b64-input" id="b64Input" placeholder="输入文本..."></textarea>
+                        <div class="b64-actions">
+                            <button class="b64-btn" onclick="b64Encode()">编码 ↓</button>
+                            <button class="b64-btn" onclick="b64Decode()">解码 ↑</button>
+                        </div>
+                        <textarea class="b64-output" id="b64Output" placeholder="输出结果..." readonly></textarea>
+                    </div>
+                </div>
+
+                <!-- JSON格式化 -->
+                <div class="tool-card" id="tool-json">
+                    <div class="tool-icon"><i class="fas fa-file-code"></i></div>
+                    <h3>JSON 格式化</h3>
+                    <p>美化压缩的 JSON，一目了然</p>
+                    <div class="tool-widget">
+                        <textarea class="json-input" id="jsonInput" placeholder='{"key": "value"}'></textarea>
+                        <div class="b64-actions">
+                            <button class="b64-btn" onclick="jsonFormat()">格式化</button>
+                            <button class="b64-btn" onclick="jsonMinify()">压缩</button>
+                        </div>
+                        <textarea class="b64-output" id="jsonOutput" placeholder="格式化结果..." readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集 -->
+    <section class="section gallery" id="gallery">
+        <div class="container">
+            <p class="section-eyebrow">作品集</p>
+            <h2 class="section-title">精选项目</h2>
+            <p class="section-desc">每一个项目都是技术与创意的融合。</p>
+            <div class="gallery-grid">
+                <div class="gallery-item" style="--accent: #2997ff;">
+                    <div class="gallery-icon"><i class="fas fa-gamepad"></i></div>
+                    <h3>传奇2风格RPG</h3>
+                    <p>暗黑奇幻RPG游戏开发，从美术资产到完整游戏世界</p>
+                    <span class="gallery-tag">进行中</span>
+                </div>
+                <div class="gallery-item" style="--accent: #bf5af2;">
+                    <div class="gallery-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>网络架构方案</h3>
+                    <p>企业级网络架构设计与实施方案，十三年经验沉淀</p>
+                    <span class="gallery-tag">已完成</span>
+                </div>
+                <div class="gallery-item" style="--accent: #30d158;">
+                    <div class="gallery-icon"><i class="fas fa-tools"></i></div>
+                    <h3>军哥工具箱</h3>
+                    <p>开发者效率工具集合，从日常编码到项目部署</p>
+                    <span class="gallery-tag">持续更新</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系 -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <p class="section-eyebrow">联系方式</p>
+            <h2 class="section-title">找军哥聊聊</h2>
+            <p class="section-desc">无论是技术交流还是项目合作，随时欢迎。</p>
+            <div class="contact-links">
+                <a href="mailto:735097808@qq.com" class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <span>735097808@qq.com</span>
+                </a>
+                <a href="#" class="contact-card wechat-card">
+                    <i class="fab fa-weixin"></i>
+                    <span>微信</span>
+                    <div class="wechat-tooltip">
+                        <div class="wechat-tooltip-arrow"></div>
+                        <div class="wechat-qr">
+                            <img src="https://s41.ax1x.com/2026/04/24/peWNqAO.jpg" alt="微信二维码" class="wechat-qr-img" />
+                        </div>
+                        <div class="wechat-id">
+                            <i class="fab fa-weixin"></i>
+                            <span>minjun100856</span>
+                        </div>
+                        <p class="wechat-hint">扫码或搜索微信号添加好友</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <span class="logo-icon">J</span>
+                    <span>军哥的私人订制</span>
+                </div>
+                <p class="footer-copy">&copy; 2024 军哥的私人订制 · 计算机网络 2013届</p>
+                <p class="footer-note">十三年初心不改，代码改变世界</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
