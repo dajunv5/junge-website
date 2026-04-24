@@ -17,6 +17,7 @@
             --reader-surface: rgba(255,255,255,0.03);
             --reader-border: rgba(255,255,255,0.06);
             --reader-highlight: rgba(41,151,255,0.12);
+            --nav-height: 44px;
             --reader-footer-h: 52px;
             --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
@@ -32,6 +33,9 @@
             --text-secondary: #6e6e73;
             --text-tertiary: #86868b;
         }
+
+        /* 覆盖全局style.css的body padding */
+        body { padding-top: 0 !important; padding-bottom: 0 !important; }
 
         .reader-page {
             padding-top: var(--nav-height);
