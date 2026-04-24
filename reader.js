@@ -283,6 +283,25 @@
     let fontSize = 16;
     let isLightTheme = false;
     let activeParagraph = -1;
+    let speechRate = 1.0;
+
+    // ===== Mandarin Voice Selection =====
+    let _cnVoice = null;
+    function _findMandarinVoice() {
+        if (_cnVoice) return _cnVoice;
+        if (!window.speechSynthesis) return null;
+        const voices = window.speechSynthesis.getVoices();
+        if (!voices.length) return null;
+        // 优先选 zh-CN (大陆普通话)，再选 cmn 开头，排除粤语(zh-HK)和繁体(zh-TW)
+        _cnVoice = voices.find(v => v.lang === 'zh-CN') ||
+                   voices.find(v => v.lang.startsWith('cmn')) ||
+                   voices.find(v => v.lang.startsWith('zh') && !v.lang.includes('HK') && !v.lang.includes('TW'));
+        return _cnVoice;
+    }
+    if (window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = function() { _cnVoice = null; _findMandarinVoice(); };
+        _findMandarinVoice();
+    }
     let notePopupTarget = null; // { lessonId, paraIdx }
 
     // ===== LocalStorage Keys =====
@@ -290,6 +309,7 @@
     const LS_NOTES = 'reader_notes';
     const LS_FONT = 'reader_fontsize';
     const LS_THEME = 'reader_theme';
+    const LS_SPEED = 'reader_speed';
 
     // ===== Helpers =====
     function getNotes() {
@@ -330,6 +350,14 @@
                         <div class="font-panel-label">字体大小</div>
                         <input type="range" class="font-slider" id="fontSlider" min="12" max="24" step="1">
                         <div class="font-size-preview" id="fontPreview">16px</div>
+                    </div>
+                </div>
+                <div style="position:relative;">
+                    <button class="nav-btn" id="speedBtn" title="朗读速度"><i class="fas fa-gauge-high"></i></button>
+                    <div class="speed-panel" id="speedPanel">
+                        <div class="font-panel-label">朗读速度</div>
+                        <input type="range" class="font-slider" id="speedSlider" min="5" max="20" step="1">
+                        <div class="font-size-preview" id="speedPreview">1.0x</div>
                     </div>
                 </div>
             </div>
@@ -383,6 +411,9 @@
         // Restore state
         const savedFont = localStorage.getItem(LS_FONT);
         if (savedFont) fontSize = parseInt(savedFont);
+
+        const savedSpeed = localStorage.getItem(LS_SPEED);
+        if (savedSpeed) speechRate = parseFloat(savedSpeed);
 
         const savedTheme = localStorage.getItem(LS_THEME);
         if (savedTheme === 'light') {
@@ -454,6 +485,31 @@
             localStorage.setItem(LS_FONT, fontSize);
         });
         document.documentElement.style.setProperty('--reader-font-size', fontSize + 'px');
+
+        // Speed control
+        const speedBtn = document.getElementById('speedBtn');
+        const speedPanel = document.getElementById('speedPanel');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedPreview = document.getElementById('speedPreview');
+
+        speedBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            speedPanel.classList.toggle('show');
+            fontPanel.classList.remove('show');
+        });
+        document.addEventListener('click', function(e) {
+            if (!speedPanel.contains(e.target) && e.target !== speedBtn) {
+                speedPanel.classList.remove('show');
+            }
+        });
+
+        speedSlider.value = Math.round(speechRate * 10);
+        speedPreview.textContent = speechRate.toFixed(1) + 'x';
+        speedSlider.addEventListener('input', function() {
+            speechRate = parseInt(this.value) / 10;
+            speedPreview.textContent = speechRate.toFixed(1) + 'x';
+            localStorage.setItem(LS_SPEED, speechRate);
+        });
 
         // Navigation buttons
         document.getElementById('prevBtn').addEventListener('click', function() {
@@ -588,6 +644,7 @@
                             const hasNote = notes[noteKey] ? ' has-note' : '';
                             return `<div class="text-paragraph${hasNote}" data-lesson="${lessonId}" data-idx="${i}" data-lang="cn" data-text="${t.cn.replace(/"/g, '&quot;')}" onclick="window._onParaClick(this)">
                                 <span class="para-text">${t.cn}</span>
+                                <button class="para-speak" onclick="event.stopPropagation(); window._speakPara(this.parentElement)" title="朗读此句"><i class="fas fa-volume-up"></i></button>
                             </div>`;
                         }).join('')}
                     </div>
@@ -757,7 +814,7 @@
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(word);
         u.lang = 'en-US';
-        u.rate = 0.8;
+        u.rate = Math.max(0.5, speechRate * 0.85);
         u.pitch = 1.1;
         window.speechSynthesis.speak(u);
     };
@@ -768,8 +825,15 @@
         const text = el.getAttribute('data-text');
         const lang = el.getAttribute('data-lang');
         const u = new SpeechSynthesisUtterance(text);
-        u.lang = lang === 'en' ? 'en-US' : 'zh-CN';
-        u.rate = lang === 'en' ? 0.85 : 1.0;
+        if (lang === 'en') {
+            u.lang = 'en-US';
+            u.rate = Math.max(0.5, speechRate * 0.85);
+        } else {
+            const cnVoice = _findMandarinVoice();
+            if (cnVoice) u.voice = cnVoice;
+            u.lang = 'zh-CN';
+            u.rate = Math.max(0.5, speechRate);
+        }
         u.pitch = 1.0;
 
         // Highlight while speaking
@@ -792,8 +856,15 @@
         paras.forEach(p => { fullText += p.getAttribute('data-text') + '. '; });
 
         const u = new SpeechSynthesisUtterance(fullText.trim());
-        u.lang = lang === 'en' ? 'en-US' : 'zh-CN';
-        u.rate = lang === 'en' ? 0.8 : 0.95;
+        if (lang === 'en') {
+            u.lang = 'en-US';
+            u.rate = Math.max(0.5, speechRate * 0.85);
+        } else {
+            const cnVoice = _findMandarinVoice();
+            if (cnVoice) u.voice = cnVoice;
+            u.lang = 'zh-CN';
+            u.rate = Math.max(0.5, speechRate * 0.95);
+        }
         window.speechSynthesis.speak(u);
 
         // Highlight paragraphs sequentially
@@ -801,11 +872,12 @@
         paras.forEach(p => p.classList.remove('speaking'));
         if (paras[0]) paras[0].classList.add('speaking');
 
-        // Approximate timing: ~chars * 60ms for en, ~chars * 80ms for cn
+        // Approximate timing adjusted by speech rate
+        const rateFactor = 1.0 / Math.max(0.5, speechRate);
         let accTime = 0;
         paras.forEach((p, i) => {
             const charCount = p.getAttribute('data-text').length;
-            const delay = lang === 'en' ? charCount * 65 + 300 : charCount * 90 + 300;
+            const delay = (lang === 'en' ? charCount * 65 + 300 : charCount * 90 + 300) * rateFactor;
             accTime += delay;
             setTimeout(() => {
                 paras.forEach(pp => pp.classList.remove('speaking'));
