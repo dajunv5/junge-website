@@ -147,11 +147,13 @@
             display: inline-flex; align-items: center; gap: 6px;
             padding: 6px 14px; background: rgba(41,151,255,0.08);
             border: 1px solid rgba(41,151,255,0.15); border-radius: 980px;
-            font-size: 13px; transition: all 0.2s;
+            font-size: 13px; transition: all 0.2s; cursor: pointer;
         }
         .word-tag:hover { background: rgba(41,151,255,0.15); transform: translateY(-1px); }
         .word-tag .word-en { font-weight: 600; color: var(--accent-blue); }
         .word-tag .word-cn { color: var(--text-secondary); font-size: 12px; }
+        .word-speak { color: var(--accent-blue); opacity: 0.4; font-size: 11px; margin-left: 2px; transition: opacity 0.2s; }
+        .word-tag:hover .word-speak { opacity: 1; }
 
         /* Bilingual Layout */
         .bilingual-layout {
@@ -167,9 +169,20 @@
             padding: 12px 20px; font-size: 12px; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.06em;
             border-bottom: 1px solid var(--reader-border);
+            display: flex; align-items: center; justify-content: space-between;
         }
         .lang-header.en { color: var(--accent-blue); }
         .lang-header.cn { color: var(--accent-purple); }
+
+        .speak-all-btn {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 980px; padding: 4px 12px; font-size: 11px;
+            color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 5px; font-family: inherit;
+        }
+        .speak-all-btn:hover { background: rgba(41,151,255,0.15); color: var(--accent-blue); border-color: rgba(41,151,255,0.3); }
+        body.light-theme .speak-all-btn { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+        body.light-theme .speak-all-btn:hover { background: rgba(41,151,255,0.1); }
 
         .lang-body {
             padding: 16px 20px; font-size: var(--reader-font-size);
@@ -180,9 +193,20 @@
             padding: 10px 14px; border-radius: 10px; margin-bottom: 6px;
             cursor: pointer; transition: all 0.2s; position: relative;
             user-select: none; -webkit-user-select: none;
+            display: flex; align-items: flex-start; gap: 8px;
         }
         .text-paragraph:hover { background: var(--reader-highlight); }
         .text-paragraph.active { background: var(--reader-highlight); border-left: 3px solid var(--accent-blue); }
+        .text-paragraph .para-text { flex: 1; }
+        .text-paragraph .para-speak {
+            background: none; border: none; color: var(--accent-blue); opacity: 0;
+            cursor: pointer; font-size: 13px; padding: 2px 4px; transition: opacity 0.2s;
+            flex-shrink: 0; margin-top: 3px;
+        }
+        .text-paragraph:hover .para-speak { opacity: 0.6; }
+        .text-paragraph .para-speak:hover { opacity: 1; }
+        .text-paragraph.speaking { background: rgba(41,151,255,0.18) !important; border-left: 3px solid var(--accent-blue); }
+        .text-paragraph.speaking .para-speak { opacity: 1; color: var(--accent-green); }
         .text-paragraph.has-note::after {
             content: '\f249'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
             position: absolute; top: 6px; right: 8px; font-size: 10px;

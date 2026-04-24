@@ -553,9 +553,10 @@
                     <div class="words-label"><i class="fas fa-spell-check"></i> New Words / 生词</div>
                     <div class="words-grid">
                         ${lesson.words.map(w => `
-                            <div class="word-tag">
+                            <div class="word-tag" onclick="window._speakWord('${w.en.replace(/'/g, "\\'")}')">
                                 <span class="word-en">${w.en}</span>
                                 <span class="word-cn">${w.cn}</span>
+                                <span class="word-speak"><i class="fas fa-volume-up"></i></span>
                             </div>
                         `).join('')}
                     </div>
@@ -567,22 +568,27 @@
         html += `
             <div class="bilingual-layout">
                 <div class="lang-column">
-                    <div class="lang-header en"><i class="fas fa-font"></i> English</div>
+                    <div class="lang-header en"><i class="fas fa-font"></i> English <button class="speak-all-btn" onclick="window._speakAll('en')" title="朗读全部英文"><i class="fas fa-volume-up"></i></button></div>
                     <div class="lang-body" id="enBody">
                         ${lesson.text.map((t, i) => {
                             const noteKey = getNoteKey(lessonId, i);
                             const hasNote = notes[noteKey] ? ' has-note' : '';
-                            return `<div class="text-paragraph${hasNote}" data-lesson="${lessonId}" data-idx="${i}" data-lang="en" onclick="window._onParaClick(this)">${t.en}</div>`;
+                            return `<div class="text-paragraph${hasNote}" data-lesson="${lessonId}" data-idx="${i}" data-lang="en" data-text="${t.en.replace(/"/g, '&quot;')}" onclick="window._onParaClick(this)">
+                                <span class="para-text">${t.en}</span>
+                                <button class="para-speak" onclick="event.stopPropagation(); window._speakPara(this.parentElement)" title="朗读此句"><i class="fas fa-volume-up"></i></button>
+                            </div>`;
                         }).join('')}
                     </div>
                 </div>
                 <div class="lang-column">
-                    <div class="lang-header cn"><i class="fas fa-language"></i> 中文</div>
+                    <div class="lang-header cn"><i class="fas fa-language"></i> 中文 <button class="speak-all-btn" onclick="window._speakAll('cn')" title="朗读全部中文"><i class="fas fa-volume-up"></i></button></div>
                     <div class="lang-body" id="cnBody">
                         ${lesson.text.map((t, i) => {
                             const noteKey = getNoteKey(lessonId, i);
                             const hasNote = notes[noteKey] ? ' has-note' : '';
-                            return `<div class="text-paragraph${hasNote}" data-lesson="${lessonId}" data-idx="${i}" data-lang="cn" onclick="window._onParaClick(this)">${t.cn}</div>`;
+                            return `<div class="text-paragraph${hasNote}" data-lesson="${lessonId}" data-idx="${i}" data-lang="cn" data-text="${t.cn.replace(/"/g, '&quot;')}" onclick="window._onParaClick(this)">
+                                <span class="para-text">${t.cn}</span>
+                            </div>`;
                         }).join('')}
                     </div>
                 </div>
@@ -742,6 +748,76 @@
             ? '<i class="fas fa-bookmark"></i>'
             : '<i class="far fa-bookmark"></i>';
     }
+
+    // ===== Speech / 发音功能 =====
+    let _currentUtterance = null;
+
+    window._speakWord = function(word) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(word);
+        u.lang = 'en-US';
+        u.rate = 0.8;
+        u.pitch = 1.1;
+        window.speechSynthesis.speak(u);
+    };
+
+    window._speakPara = function(el) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const text = el.getAttribute('data-text');
+        const lang = el.getAttribute('data-lang');
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = lang === 'en' ? 'en-US' : 'zh-CN';
+        u.rate = lang === 'en' ? 0.85 : 1.0;
+        u.pitch = 1.0;
+
+        // Highlight while speaking
+        el.classList.add('speaking');
+        u.onend = function() { el.classList.remove('speaking'); };
+        u.onerror = function() { el.classList.remove('speaking'); };
+
+        window.speechSynthesis.speak(u);
+    };
+
+    window._speakAll = function(lang) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+
+        const bodyId = lang === 'en' ? 'enBody' : 'cnBody';
+        const paras = document.querySelectorAll(`#${bodyId} .text-paragraph`);
+        if (!paras.length) return;
+
+        let fullText = '';
+        paras.forEach(p => { fullText += p.getAttribute('data-text') + '. '; });
+
+        const u = new SpeechSynthesisUtterance(fullText.trim());
+        u.lang = lang === 'en' ? 'en-US' : 'zh-CN';
+        u.rate = lang === 'en' ? 0.8 : 0.95;
+        window.speechSynthesis.speak(u);
+
+        // Highlight paragraphs sequentially
+        let idx = 0;
+        paras.forEach(p => p.classList.remove('speaking'));
+        if (paras[0]) paras[0].classList.add('speaking');
+
+        // Approximate timing: ~chars * 60ms for en, ~chars * 80ms for cn
+        let accTime = 0;
+        paras.forEach((p, i) => {
+            const charCount = p.getAttribute('data-text').length;
+            const delay = lang === 'en' ? charCount * 65 + 300 : charCount * 90 + 300;
+            accTime += delay;
+            setTimeout(() => {
+                paras.forEach(pp => pp.classList.remove('speaking'));
+                if (i + 1 < paras.length) paras[i + 1].classList.add('speaking');
+            }, accTime);
+        });
+
+        // Clear all after done (approximate total)
+        setTimeout(() => {
+            paras.forEach(p => p.classList.remove('speaking'));
+        }, accTime + 2000);
+    };
 
     // ===== Init =====
     document.addEventListener('DOMContentLoaded', renderApp);
