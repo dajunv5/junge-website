@@ -2,18 +2,23 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>双语对照阅读 - 私人订制书窗</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* ===== Reader Specific Styles ===== */
+        /* ===== Reader: 移动优先基础样式 ===== */
         :root {
             --reader-font-size: 16px;
             --reader-bg: #000000;
             --reader-surface: rgba(255,255,255,0.03);
             --reader-border: rgba(255,255,255,0.06);
             --reader-highlight: rgba(41,151,255,0.12);
+            --reader-footer-h: 52px;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
         body.light-theme {
@@ -30,18 +35,18 @@
 
         .reader-page {
             padding-top: var(--nav-height);
-            min-height: 100vh;
+            min-height: 100vh; min-height: 100dvh;
             background: var(--reader-bg);
             transition: background 0.3s;
         }
 
-        /* Reader Navbar */
+        /* Reader Navbar — 移动优先紧凑布局 */
         .reader-nav {
             position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height); z-index: 1000;
             background: rgba(0,0,0,0.72); backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
             border-bottom: 0.5px solid rgba(255,255,255,0.08);
-            display: flex; align-items: center; padding: 0 16px; gap: 12px;
+            display: flex; align-items: center; padding: 0 8px; gap: 4px;
         }
         body.light-theme .reader-nav {
             background: rgba(245,245,247,0.72);
@@ -49,32 +54,33 @@
         }
 
         .reader-nav .nav-back {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 13px; color: var(--accent-blue); font-weight: 500;
+            display: flex; align-items: center; gap: 4px;
+            font-size: 12px; color: var(--accent-blue); font-weight: 500;
             white-space: nowrap; cursor: pointer; text-decoration: none;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s; min-height: 44px; padding: 0 8px;
         }
         .reader-nav .nav-back:hover { opacity: 0.8; }
         .reader-nav .nav-back i { font-size: 12px; }
 
         .reader-nav .book-title {
-            flex: 1; font-size: 14px; font-weight: 600; color: var(--text-primary);
+            flex: 1; font-size: 12px; font-weight: 600; color: var(--text-primary);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             text-align: center;
         }
 
         .reader-nav .nav-controls {
-            display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+            display: flex; align-items: center; gap: 4px; flex-shrink: 0;
         }
 
         .lesson-select {
             background: rgba(255,255,255,0.08); color: var(--text-primary);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
-            padding: 5px 10px; font-size: 12px; font-family: inherit;
+            padding: 4px 24px 4px 8px; font-size: 11px; font-family: inherit;
             cursor: pointer; outline: none; appearance: none;
-            -webkit-appearance: none; padding-right: 24px;
+            -webkit-appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a1a1a6'/%3E%3C/svg%3E");
             background-repeat: no-repeat; background-position: right 8px center;
+            min-height: 36px;
         }
         body.light-theme .lesson-select {
             background-color: rgba(0,0,0,0.05);
@@ -85,9 +91,9 @@
         .nav-btn {
             background: rgba(255,255,255,0.08); color: var(--text-secondary);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
-            width: 32px; height: 32px; display: flex; align-items: center;
-            justify-content: center; cursor: pointer; font-size: 13px;
-            transition: all 0.2s;
+            min-width: 36px; min-height: 36px; width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 12px; transition: all 0.2s;
         }
         .nav-btn:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
         body.light-theme .nav-btn {
@@ -108,65 +114,66 @@
         }
         body.light-theme .progress-bar-container { background: rgba(0,0,0,0.06); }
 
-        /* Main Content */
+        /* Main Content — 移动优先 */
         .reader-content {
-            max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px;
+            max-width: 1200px; margin: 0 auto; padding: 16px 12px calc(var(--reader-footer-h) + var(--safe-bottom) + 20px);
         }
 
         /* Lesson Header */
         .lesson-header {
-            text-align: center; margin-bottom: 32px; padding: 24px 0;
+            text-align: center; margin-bottom: 20px; padding: 16px 0;
         }
         .lesson-number {
-            font-size: 13px; font-weight: 600; color: var(--accent-blue);
-            text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;
+            font-size: 12px; font-weight: 600; color: var(--accent-blue);
+            text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
         }
         .lesson-title {
-            font-size: clamp(28px, 5vw, 40px); font-weight: 700;
+            font-size: clamp(24px,6vw,40px); font-weight: 700;
             letter-spacing: -0.02em; color: var(--text-primary);
         }
         .lesson-title-cn {
-            font-size: clamp(18px, 3vw, 24px); font-weight: 400;
-            color: var(--text-secondary); margin-top: 4px;
+            font-size: clamp(16px,4vw,24px); font-weight: 400;
+            color: var(--text-secondary); margin-top: 2px;
         }
 
-        /* Words Section */
+        /* Words Section — 移动优先 */
         .words-section {
-            margin-bottom: 32px; padding: 20px 24px;
+            margin-bottom: 20px; padding: 14px 12px;
             background: var(--reader-surface); border: 1px solid var(--reader-border);
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-sm);
         }
         .words-label {
-            font-size: 12px; font-weight: 600; color: var(--accent-blue);
-            text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;
+            font-size: 11px; font-weight: 600; color: var(--accent-blue);
+            text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
         }
         .words-grid {
-            display: flex; flex-wrap: wrap; gap: 8px;
+            display: flex; flex-wrap: wrap; gap: 6px;
         }
         .word-tag {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 6px 14px; background: rgba(41,151,255,0.08);
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 5px 10px; background: rgba(41,151,255,0.08);
             border: 1px solid rgba(41,151,255,0.15); border-radius: 980px;
-            font-size: 13px; transition: all 0.2s; cursor: pointer;
+            font-size: 12px; transition: all 0.2s; cursor: pointer;
+            min-height: 36px;
         }
         .word-tag:hover { background: rgba(41,151,255,0.15); transform: translateY(-1px); }
         .word-tag .word-en { font-weight: 600; color: var(--accent-blue); }
-        .word-tag .word-cn { color: var(--text-secondary); font-size: 12px; }
-        .word-speak { color: var(--accent-blue); opacity: 0.4; font-size: 11px; margin-left: 2px; transition: opacity 0.2s; }
+        .word-tag .word-cn { color: var(--text-secondary); font-size: 11px; }
+        .word-speak { color: var(--accent-blue); opacity: 0.5; font-size: 10px; margin-left: 2px; transition: opacity 0.2s; }
         .word-tag:hover .word-speak { opacity: 1; }
 
-        /* Bilingual Layout */
+        /* Bilingual Layout — 移动端纵向堆叠 */
         .bilingual-layout {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-            margin-bottom: 32px;
+            display: grid; grid-template-columns: 1fr; gap: 12px;
+            margin-bottom: 20px;
         }
 
         .lang-column {
             background: var(--reader-surface); border: 1px solid var(--reader-border);
-            border-radius: var(--radius-md); overflow: hidden;
+            border-radius: var(--radius-sm); overflow: hidden;
         }
         .lang-header {
-            padding: 12px 20px; font-size: 12px; font-weight: 600;
+            padding: 10px 14px; font-size: 11px; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.06em;
             border-bottom: 1px solid var(--reader-border);
             display: flex; align-items: center; justify-content: space-between;
@@ -176,40 +183,43 @@
 
         .speak-all-btn {
             background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 980px; padding: 4px 12px; font-size: 11px;
+            border-radius: 980px; padding: 4px 10px; font-size: 10px;
             color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
-            display: inline-flex; align-items: center; gap: 5px; font-family: inherit;
+            display: inline-flex; align-items: center; gap: 4px; font-family: inherit;
+            min-height: 32px;
         }
         .speak-all-btn:hover { background: rgba(41,151,255,0.15); color: var(--accent-blue); border-color: rgba(41,151,255,0.3); }
         body.light-theme .speak-all-btn { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
         body.light-theme .speak-all-btn:hover { background: rgba(41,151,255,0.1); }
 
         .lang-body {
-            padding: 16px 20px; font-size: var(--reader-font-size);
+            padding: 10px 12px; font-size: var(--reader-font-size);
             line-height: 1.8;
         }
 
         .text-paragraph {
-            padding: 10px 14px; border-radius: 10px; margin-bottom: 6px;
+            padding: 8px 10px; border-radius: 8px; margin-bottom: 4px;
             cursor: pointer; transition: all 0.2s; position: relative;
             user-select: none; -webkit-user-select: none;
-            display: flex; align-items: flex-start; gap: 8px;
+            display: flex; align-items: flex-start; gap: 6px;
+            min-height: 44px;   /* 触控友好 */
         }
         .text-paragraph:hover { background: var(--reader-highlight); }
         .text-paragraph.active { background: var(--reader-highlight); border-left: 3px solid var(--accent-blue); }
-        .text-paragraph .para-text { flex: 1; }
+        .text-paragraph .para-text { flex: 1; padding-top: 2px; }
         .text-paragraph .para-speak {
-            background: none; border: none; color: var(--accent-blue); opacity: 0;
-            cursor: pointer; font-size: 13px; padding: 2px 4px; transition: opacity 0.2s;
-            flex-shrink: 0; margin-top: 3px;
+            background: none; border: none; color: var(--accent-blue); opacity: 0.3;
+            cursor: pointer; font-size: 13px; padding: 4px 6px; transition: opacity 0.2s;
+            flex-shrink: 0; margin-top: 2px; min-width: 32px; min-height: 32px;
+            display: flex; align-items: center; justify-content: center;
         }
-        .text-paragraph:hover .para-speak { opacity: 0.6; }
+        .text-paragraph:hover .para-speak { opacity: 0.7; }
         .text-paragraph .para-speak:hover { opacity: 1; }
         .text-paragraph.speaking { background: rgba(41,151,255,0.18) !important; border-left: 3px solid var(--accent-blue); }
         .text-paragraph.speaking .para-speak { opacity: 1; color: var(--accent-green); }
         .text-paragraph.has-note::after {
             content: '\f249'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
-            position: absolute; top: 6px; right: 8px; font-size: 10px;
+            position: absolute; top: 4px; right: 6px; font-size: 9px;
             color: var(--accent-orange); opacity: 0.7;
         }
 
@@ -218,7 +228,10 @@
             position: fixed; z-index: 2000; display: none;
             background: rgba(30,30,30,0.98); backdrop-filter: blur(40px);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
-            padding: 16px; min-width: 280px; box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            padding: 14px; min-width: 260px; box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            /* 移动端居中显示 */
+            left: 50% !important; top: 50% !important;
+            transform: translate(-50%, -50%);
         }
         body.light-theme .note-popup {
             background: rgba(255,255,255,0.98);
@@ -227,18 +240,19 @@
         .note-popup.show { display: block; }
         .note-popup-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
-        .note-popup-title { font-size: 13px; font-weight: 600; color: var(--accent-orange); }
+        .note-popup-title { font-size: 12px; font-weight: 600; color: var(--accent-orange); }
         .note-popup-close {
             background: none; border: none; color: var(--text-tertiary);
-            cursor: pointer; font-size: 16px; padding: 2px 6px;
+            cursor: pointer; font-size: 16px; padding: 4px 8px; min-width: 44px; min-height: 44px;
+            display: flex; align-items: center; justify-content: center;
         }
         .note-popup textarea {
             width: 100%; min-height: 80px; background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
-            padding: 10px; font-size: 13px; font-family: inherit; color: var(--text-primary);
-            resize: vertical; outline: none;
+            padding: 10px; font-size: 14px; font-family: inherit; color: var(--text-primary);
+            resize: vertical; outline: none; -webkit-appearance: none;
         }
         body.light-theme .note-popup textarea {
             background: rgba(0,0,0,0.04);
@@ -246,11 +260,12 @@
         }
         .note-popup textarea:focus { border-color: var(--accent-blue); }
         .note-popup-actions {
-            display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;
+            display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;
         }
         .note-popup-btn {
-            padding: 6px 16px; border-radius: 8px; font-size: 12px;
+            padding: 8px 16px; border-radius: 8px; font-size: 12px;
             font-weight: 500; cursor: pointer; border: none; transition: all 0.2s;
+            min-height: 44px;
         }
         .note-popup-btn.save {
             background: var(--accent-blue); color: #fff;
@@ -261,14 +276,16 @@
         }
         .note-popup-btn.delete:hover { background: rgba(255,59,48,0.2); }
 
-        /* Navigation Footer */
+        /* Navigation Footer — 移动优先触控友好 */
         .reader-footer {
             position: fixed; bottom: 0; left: 0; right: 0;
+            height: var(--reader-footer-h);
             background: rgba(0,0,0,0.85); backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 0.5px solid rgba(255,255,255,0.08);
-            padding: 12px 24px; display: flex; align-items: center;
+            padding: 0 12px; display: flex; align-items: center;
             justify-content: space-between; z-index: 1000;
+            padding-bottom: var(--safe-bottom);
         }
         body.light-theme .reader-footer {
             background: rgba(245,245,247,0.85);
@@ -276,11 +293,12 @@
         }
 
         .footer-nav-btn {
-            display: flex; align-items: center; gap: 8px;
-            padding: 8px 20px; background: rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 0 16px; background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 980px;
-            color: var(--text-secondary); font-size: 13px; font-weight: 500;
+            color: var(--text-secondary); font-size: 12px; font-weight: 500;
             cursor: pointer; transition: all 0.2s; text-decoration: none;
+            min-height: 40px;
         }
         .footer-nav-btn:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
         .footer-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
@@ -291,14 +309,14 @@
         }
 
         .footer-info {
-            display: flex; align-items: center; gap: 16px; font-size: 12px;
+            display: flex; align-items: center; gap: 12px; font-size: 11px;
             color: var(--text-tertiary);
         }
         .footer-info .bookmark-btn {
-            display: flex; align-items: center; gap: 6px;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
             background: none; border: none; color: var(--text-tertiary);
             font-size: 12px; cursor: pointer; transition: color 0.2s;
-            font-family: inherit;
+            font-family: inherit; min-width: 44px; min-height: 44px;
         }
         .footer-info .bookmark-btn:hover { color: var(--accent-orange); }
         .footer-info .bookmark-btn.bookmarked { color: var(--accent-orange); }
@@ -325,7 +343,7 @@
         }
         body.light-theme .font-slider { background: rgba(0,0,0,0.1); }
         .font-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 18px; height: 18px;
+            -webkit-appearance: none; width: 22px; height: 22px;
             background: var(--accent-blue); border-radius: 50%; cursor: pointer;
         }
         .font-size-preview {
@@ -373,48 +391,67 @@
         .admin-modal input {
             width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
-            font-size: 14px; color: var(--text-primary); outline: none;
-            font-family: inherit; margin-bottom: 12px;
+            font-size: 16px; color: var(--text-primary); outline: none;
+            font-family: inherit; margin-bottom: 12px; -webkit-appearance: none;
         }
         .admin-modal input:focus { border-color: var(--accent-blue); }
         .admin-modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
         .admin-modal-btn {
-            padding: 8px 20px; border-radius: 980px; font-size: 13px;
+            padding: 10px 20px; border-radius: 980px; font-size: 13px;
             font-weight: 500; cursor: pointer; border: none; transition: all 0.2s;
+            min-height: 44px;
         }
         .admin-modal-btn.cancel { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
         .admin-modal-btn.confirm { background: var(--accent-blue); color: #fff; }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .reader-nav { padding: 0 10px; gap: 6px; }
-            .reader-nav .book-title { font-size: 12px; }
-            .lesson-select { font-size: 11px; padding: 4px 8px; }
-            .nav-btn { width: 28px; height: 28px; font-size: 11px; }
-
-            .bilingual-layout {
-                grid-template-columns: 1fr; gap: 16px;
-            }
-
-            .reader-content { padding: 16px 16px 100px; }
-            .lesson-header { margin-bottom: 20px; padding: 16px 0; }
-
-            .words-section { padding: 14px 16px; }
-            .word-tag { padding: 4px 10px; font-size: 12px; }
-
+        /* ===== 桌面端增强 (≥576px) ===== */
+        @media (min-width: 576px) {
+            .reader-content { padding: 20px 20px calc(var(--reader-footer-h) + 24px); }
+            .words-section { padding: 16px 18px; }
             .lang-body { padding: 12px 16px; }
-
-            .footer-nav-btn { padding: 6px 14px; font-size: 12px; }
-            .footer-nav-btn span.nav-label { display: none; }
-
-            .reader-footer { padding: 10px 12px; }
+            .reader-nav { padding: 0 12px; gap: 6px; }
         }
 
-        @media (max-width: 480px) {
-            .reader-nav .nav-back span { display: none; }
-            .reader-nav .book-title { font-size: 13px; }
-            .words-grid { gap: 6px; }
-            .word-tag { padding: 3px 8px; font-size: 11px; }
+        /* ===== 桌面端增强 (≥768px) ===== */
+        @media (min-width: 768px) {
+            :root { --nav-height: 48px; --reader-footer-h: 56px; }
+
+            .reader-nav { padding: 0 16px; gap: 8px; }
+            .reader-nav .nav-back { font-size: 13px; gap: 6px; }
+            .reader-nav .book-title { font-size: 14px; }
+            .lesson-select { font-size: 12px; padding: 5px 24px 5px 10px; min-height: 32px; }
+            .nav-btn { width: 32px; height: 32px; min-width: 32px; min-height: 32px; font-size: 13px; }
+
+            .bilingual-layout { grid-template-columns: 1fr 1fr; gap: 20px; }
+
+            .reader-content { padding: 24px 24px calc(var(--reader-footer-h) + 32px); }
+            .lesson-header { margin-bottom: 28px; padding: 20px 0; }
+
+            .words-section { padding: 18px 22px; margin-bottom: 28px; }
+            .words-label { font-size: 12px; margin-bottom: 10px; }
+            .word-tag { padding: 6px 14px; font-size: 13px; min-height: auto; }
+
+            .lang-body { padding: 16px 20px; }
+            .text-paragraph { padding: 10px 14px; min-height: auto; }
+            .text-paragraph .para-speak { opacity: 0; }
+            .text-paragraph:hover .para-speak { opacity: 0.6; }
+
+            .footer-nav-btn { padding: 8px 20px; font-size: 13px; }
+            .footer-nav-btn span.nav-label { display: inline; }
+            .reader-footer { padding: 8px 24px; }
+
+            /* 笔记弹窗桌面端恢复定位 */
+            .note-popup {
+                left: auto !important; top: auto !important;
+                transform: none;
+            }
+
+            .speak-all-btn { font-size: 11px; padding: 4px 12px; }
+        }
+
+        /* ===== 大桌面增强 (≥1024px) ===== */
+        @media (min-width: 1024px) {
+            .reader-content { padding: 24px 24px calc(var(--reader-footer-h) + 40px); }
         }
     </style>
 </head>

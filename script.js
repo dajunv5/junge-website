@@ -84,10 +84,10 @@
                     <h3 style="font-size:18px;font-weight:600;margin-bottom:6px;color:#f5f5f7;">管理员验证</h3>
                     <p style="font-size:13px;color:#a1a1a6;margin-bottom:16px;">请输入管理员密码以解除防护</p>
                     <input type="password" id="adminPwd" placeholder="请输入密码" autocomplete="off"
-                        style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:14px;color:#f5f5f7;outline:none;font-family:inherit;margin-bottom:12px;">
+                        style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:16px;color:#f5f5f7;outline:none;font-family:inherit;margin-bottom:12px;">
                     <div style="display:flex;gap:8px;justify-content:flex-end;">
-                        <button id="adminCancel" style="padding:8px 20px;border-radius:980px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:rgba(255,255,255,0.08);color:#a1a1a6;">取消</button>
-                        <button id="adminConfirm" style="padding:8px 20px;border-radius:980px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:#2997ff;color:#fff;">确认</button>
+                        <button id="adminCancel" style="padding:8px 20px;border-radius:980px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:rgba(255,255,255,0.08);color:#a1a1a6;min-height:44px;">取消</button>
+                        <button id="adminConfirm" style="padding:8px 20px;border-radius:980px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:#2997ff;color:#fff;min-height:44px;">确认</button>
                     </div>
                 </div>
             `;
@@ -119,18 +119,6 @@
         };
         document.getElementById('adminPwd').focus();
     }
-
-    // ===== Base64 Content Encoding =====
-    // Key HTML content is encoded and decoded at runtime
-    function _b64Encode(str) {
-        return btoa(unescape(encodeURIComponent(str)));
-    }
-    function _b64Decode(b64) {
-        try { return decodeURIComponent(escape(atob(b64))); } catch { return ''; }
-    }
-
-    // Encode the main body content
-    const _bodyContent = _b64Encode(document.body.innerHTML);
 
     // ===== Main Application Logic =====
     document.addEventListener('DOMContentLoaded', () => {
@@ -187,8 +175,11 @@
 
         // ===== 导航栏滚动效果 =====
         const navbar = document.getElementById('navbar');
+        let lastScrollY = 0;
         window.addEventListener('scroll', () => {
-            navbar.style.background = window.scrollY > 100 ? 'rgba(0,0,0,0.92)' : 'rgba(0,0,0,0.72)';
+            const sy = window.scrollY;
+            navbar.style.background = sy > 100 ? 'rgba(0,0,0,0.92)' : 'rgba(0,0,0,0.72)';
+            lastScrollY = sy;
         }, { passive: true });
 
         // ===== 移动端菜单 =====
@@ -199,8 +190,10 @@
         const mobileToolboxTrigger = document.querySelector('.mobile-toolbox-trigger');
         const mobileSubmenu = document.querySelector('.mobile-submenu');
 
-        navToggle.addEventListener('click', () => { mobileMenu.classList.add('open'); overlay.classList.add('active'); });
-        function closeMobile() { mobileMenu.classList.remove('open'); overlay.classList.remove('active'); }
+        function openMobile() { mobileMenu.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeMobile() { mobileMenu.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+
+        navToggle.addEventListener('click', openMobile);
         mobileClose.addEventListener('click', closeMobile);
         overlay.addEventListener('click', closeMobile);
         mobileToolboxTrigger.addEventListener('click', (e) => {
@@ -209,6 +202,39 @@
             mobileToolboxTrigger.querySelector('i').style.transform = mobileSubmenu.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
         });
         mobileMenu.querySelectorAll('a').forEach(a => { if (!a.classList.contains('mobile-toolbox-trigger')) a.addEventListener('click', closeMobile); });
+
+        // ===== 微信二维码 — 移动端点击弹出 =====
+        const wechatCard = document.querySelector('.wechat-card');
+        const wechatTooltip = document.querySelector('.wechat-tooltip');
+        let wechatOpen = false;
+
+        if (wechatCard && wechatTooltip) {
+            // 移动端：点击切换
+            wechatCard.addEventListener('click', function(e) {
+                e.preventDefault();
+                // 桌面端用 hover，不处理
+                if (window.innerWidth >= 1024) return;
+                wechatOpen = !wechatOpen;
+                wechatTooltip.classList.toggle('show', wechatOpen);
+            });
+
+            // 点击其他区域关闭
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth >= 1024) return;
+                if (wechatOpen && !wechatCard.contains(e.target)) {
+                    wechatOpen = false;
+                    wechatTooltip.classList.remove('show');
+                }
+            });
+
+            // 触摸滑动关闭
+            document.addEventListener('touchmove', function() {
+                if (wechatOpen) {
+                    wechatOpen = false;
+                    wechatTooltip.classList.remove('show');
+                }
+            }, { passive: true });
+        }
 
         // ===== 滚动动画 =====
         const fadeEls = document.querySelectorAll('.book-card, .feature-card, .contact-card');
