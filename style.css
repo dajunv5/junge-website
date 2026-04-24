@@ -25,6 +25,7 @@ html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-fo
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     background: var(--bg-primary); color: var(--text-primary); line-height: 1.5; overflow-x: hidden;
+    -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -170,6 +171,11 @@ a { text-decoration: none; color: inherit; }
 .book-link { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 12px; color: var(--accent-blue); font-weight: 500; transition: color 0.15s; }
 .book-link:hover { color: #0077ed; }
 .book-link i { font-size: 10px; }
+
+.book-links-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+.book-read-link { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: var(--accent-blue); color: #fff; border-radius: 980px; font-size: 12px; font-weight: 500; transition: all 0.2s; text-decoration: none; }
+.book-read-link:hover { background: #0077ed; transform: scale(1.02); color: #fff; }
+.book-read-link i { font-size: 10px; }
 
 /* ===== 关于/特色 ===== */
 .about { background: var(--bg-secondary); }

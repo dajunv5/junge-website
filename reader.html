@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双语对照阅读 - 私人订制书窗</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ===== Reader Specific Styles ===== */
+        :root {
+            --reader-font-size: 16px;
+            --reader-bg: #000000;
+            --reader-surface: rgba(255,255,255,0.03);
+            --reader-border: rgba(255,255,255,0.06);
+            --reader-highlight: rgba(41,151,255,0.12);
+        }
+
+        body.light-theme {
+            --reader-bg: #f5f5f7;
+            --reader-surface: rgba(0,0,0,0.03);
+            --reader-border: rgba(0,0,0,0.08);
+            --reader-highlight: rgba(41,151,255,0.1);
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #e8e8ed;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --text-tertiary: #86868b;
+        }
+
+        .reader-page {
+            padding-top: var(--nav-height);
+            min-height: 100vh;
+            background: var(--reader-bg);
+            transition: background 0.3s;
+        }
+
+        /* Reader Navbar */
+        .reader-nav {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height); z-index: 1000;
+            background: rgba(0,0,0,0.72); backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; padding: 0 16px; gap: 12px;
+        }
+        body.light-theme .reader-nav {
+            background: rgba(245,245,247,0.72);
+            border-bottom-color: rgba(0,0,0,0.08);
+        }
+
+        .reader-nav .nav-back {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 13px; color: var(--accent-blue); font-weight: 500;
+            white-space: nowrap; cursor: pointer; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .reader-nav .nav-back:hover { opacity: 0.8; }
+        .reader-nav .nav-back i { font-size: 12px; }
+
+        .reader-nav .book-title {
+            flex: 1; font-size: 14px; font-weight: 600; color: var(--text-primary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            text-align: center;
+        }
+
+        .reader-nav .nav-controls {
+            display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+        }
+
+        .lesson-select {
+            background: rgba(255,255,255,0.08); color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+            padding: 5px 10px; font-size: 12px; font-family: inherit;
+            cursor: pointer; outline: none; appearance: none;
+            -webkit-appearance: none; padding-right: 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a1a1a6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 8px center;
+        }
+        body.light-theme .lesson-select {
+            background-color: rgba(0,0,0,0.05);
+            border-color: rgba(0,0,0,0.1);
+            color: #1d1d1f;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.08); color: var(--text-secondary);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+            width: 32px; height: 32px; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; font-size: 13px;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
+        body.light-theme .nav-btn {
+            background: rgba(0,0,0,0.05);
+            border-color: rgba(0,0,0,0.1);
+            color: #6e6e73;
+        }
+        body.light-theme .nav-btn:hover { background: rgba(0,0,0,0.08); color: #1d1d1f; }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed; top: var(--nav-height); left: 0; right: 0;
+            height: 3px; background: rgba(255,255,255,0.06); z-index: 999;
+        }
+        .progress-bar {
+            height: 100%; background: var(--accent-blue); transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+            border-radius: 0 2px 2px 0;
+        }
+        body.light-theme .progress-bar-container { background: rgba(0,0,0,0.06); }
+
+        /* Main Content */
+        .reader-content {
+            max-width: 1200px; margin: 0 auto; padding: 24px 24px 100px;
+        }
+
+        /* Lesson Header */
+        .lesson-header {
+            text-align: center; margin-bottom: 32px; padding: 24px 0;
+        }
+        .lesson-number {
+            font-size: 13px; font-weight: 600; color: var(--accent-blue);
+            text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;
+        }
+        .lesson-title {
+            font-size: clamp(28px, 5vw, 40px); font-weight: 700;
+            letter-spacing: -0.02em; color: var(--text-primary);
+        }
+        .lesson-title-cn {
+            font-size: clamp(18px, 3vw, 24px); font-weight: 400;
+            color: var(--text-secondary); margin-top: 4px;
+        }
+
+        /* Words Section */
+        .words-section {
+            margin-bottom: 32px; padding: 20px 24px;
+            background: var(--reader-surface); border: 1px solid var(--reader-border);
+            border-radius: var(--radius-md);
+        }
+        .words-label {
+            font-size: 12px; font-weight: 600; color: var(--accent-blue);
+            text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;
+        }
+        .words-grid {
+            display: flex; flex-wrap: wrap; gap: 8px;
+        }
+        .word-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; background: rgba(41,151,255,0.08);
+            border: 1px solid rgba(41,151,255,0.15); border-radius: 980px;
+            font-size: 13px; transition: all 0.2s;
+        }
+        .word-tag:hover { background: rgba(41,151,255,0.15); transform: translateY(-1px); }
+        .word-tag .word-en { font-weight: 600; color: var(--accent-blue); }
+        .word-tag .word-cn { color: var(--text-secondary); font-size: 12px; }
+
+        /* Bilingual Layout */
+        .bilingual-layout {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .lang-column {
+            background: var(--reader-surface); border: 1px solid var(--reader-border);
+            border-radius: var(--radius-md); overflow: hidden;
+        }
+        .lang-header {
+            padding: 12px 20px; font-size: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            border-bottom: 1px solid var(--reader-border);
+        }
+        .lang-header.en { color: var(--accent-blue); }
+        .lang-header.cn { color: var(--accent-purple); }
+
+        .lang-body {
+            padding: 16px 20px; font-size: var(--reader-font-size);
+            line-height: 1.8;
+        }
+
+        .text-paragraph {
+            padding: 10px 14px; border-radius: 10px; margin-bottom: 6px;
+            cursor: pointer; transition: all 0.2s; position: relative;
+            user-select: none; -webkit-user-select: none;
+        }
+        .text-paragraph:hover { background: var(--reader-highlight); }
+        .text-paragraph.active { background: var(--reader-highlight); border-left: 3px solid var(--accent-blue); }
+        .text-paragraph.has-note::after {
+            content: '\f249'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; top: 6px; right: 8px; font-size: 10px;
+            color: var(--accent-orange); opacity: 0.7;
+        }
+
+        /* Note Popup */
+        .note-popup {
+            position: fixed; z-index: 2000; display: none;
+            background: rgba(30,30,30,0.98); backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+            padding: 16px; min-width: 280px; box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+        }
+        body.light-theme .note-popup {
+            background: rgba(255,255,255,0.98);
+            border-color: rgba(0,0,0,0.1);
+        }
+        .note-popup.show { display: block; }
+        .note-popup-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 10px;
+        }
+        .note-popup-title { font-size: 13px; font-weight: 600; color: var(--accent-orange); }
+        .note-popup-close {
+            background: none; border: none; color: var(--text-tertiary);
+            cursor: pointer; font-size: 16px; padding: 2px 6px;
+        }
+        .note-popup textarea {
+            width: 100%; min-height: 80px; background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+            padding: 10px; font-size: 13px; font-family: inherit; color: var(--text-primary);
+            resize: vertical; outline: none;
+        }
+        body.light-theme .note-popup textarea {
+            background: rgba(0,0,0,0.04);
+            border-color: rgba(0,0,0,0.1);
+        }
+        .note-popup textarea:focus { border-color: var(--accent-blue); }
+        .note-popup-actions {
+            display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;
+        }
+        .note-popup-btn {
+            padding: 6px 16px; border-radius: 8px; font-size: 12px;
+            font-weight: 500; cursor: pointer; border: none; transition: all 0.2s;
+        }
+        .note-popup-btn.save {
+            background: var(--accent-blue); color: #fff;
+        }
+        .note-popup-btn.save:hover { opacity: 0.85; }
+        .note-popup-btn.delete {
+            background: rgba(255,59,48,0.12); color: #ff453a;
+        }
+        .note-popup-btn.delete:hover { background: rgba(255,59,48,0.2); }
+
+        /* Navigation Footer */
+        .reader-footer {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 0.5px solid rgba(255,255,255,0.08);
+            padding: 12px 24px; display: flex; align-items: center;
+            justify-content: space-between; z-index: 1000;
+        }
+        body.light-theme .reader-footer {
+            background: rgba(245,245,247,0.85);
+            border-top-color: rgba(0,0,0,0.08);
+        }
+
+        .footer-nav-btn {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 20px; background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 980px;
+            color: var(--text-secondary); font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s; text-decoration: none;
+        }
+        .footer-nav-btn:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
+        .footer-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .footer-nav-btn:disabled:hover { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+        body.light-theme .footer-nav-btn {
+            background: rgba(0,0,0,0.05);
+            border-color: rgba(0,0,0,0.1);
+        }
+
+        .footer-info {
+            display: flex; align-items: center; gap: 16px; font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        .footer-info .bookmark-btn {
+            display: flex; align-items: center; gap: 6px;
+            background: none; border: none; color: var(--text-tertiary);
+            font-size: 12px; cursor: pointer; transition: color 0.2s;
+            font-family: inherit;
+        }
+        .footer-info .bookmark-btn:hover { color: var(--accent-orange); }
+        .footer-info .bookmark-btn.bookmarked { color: var(--accent-orange); }
+        .footer-info .bookmark-btn i { font-size: 14px; }
+
+        /* Font Size Panel */
+        .font-panel {
+            position: absolute; top: 100%; right: 0; margin-top: 8px;
+            background: rgba(30,30,30,0.98); backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            padding: 12px 16px; display: none; min-width: 180px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        body.light-theme .font-panel {
+            background: rgba(255,255,255,0.98);
+            border-color: rgba(0,0,0,0.1);
+        }
+        .font-panel.show { display: block; }
+        .font-panel-label { font-size: 11px; color: var(--text-tertiary); margin-bottom: 8px; }
+        .font-slider {
+            width: 100%; -webkit-appearance: none; appearance: none;
+            height: 4px; background: rgba(255,255,255,0.12); border-radius: 2px;
+            outline: none;
+        }
+        body.light-theme .font-slider { background: rgba(0,0,0,0.1); }
+        .font-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 18px; height: 18px;
+            background: var(--accent-blue); border-radius: 50%; cursor: pointer;
+        }
+        .font-size-preview {
+            text-align: center; font-size: 12px; color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        /* DevTools Warning */
+        .devtools-warning {
+            position: fixed; inset: 0; background: #000; z-index: 99999;
+            display: none; align-items: center; justify-content: center;
+            flex-direction: column; gap: 16px; color: #ff453a;
+        }
+        .devtools-warning.show { display: flex; }
+        .devtools-warning i { font-size: 48px; }
+        .devtools-warning p { font-size: 18px; font-weight: 600; }
+
+        /* Admin Unlock Modal */
+        .admin-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+            z-index: 100000; display: none; align-items: center; justify-content: center;
+        }
+        .admin-modal.show { display: flex; }
+        .admin-modal-inner {
+            background: rgba(30,30,30,0.98); backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+            padding: 28px 32px; max-width: 360px; width: 90%;
+        }
+        .admin-modal h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+        .admin-modal p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+        .admin-modal input {
+            width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+            font-size: 14px; color: var(--text-primary); outline: none;
+            font-family: inherit; margin-bottom: 12px;
+        }
+        .admin-modal input:focus { border-color: var(--accent-blue); }
+        .admin-modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+        .admin-modal-btn {
+            padding: 8px 20px; border-radius: 980px; font-size: 13px;
+            font-weight: 500; cursor: pointer; border: none; transition: all 0.2s;
+        }
+        .admin-modal-btn.cancel { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+        .admin-modal-btn.confirm { background: var(--accent-blue); color: #fff; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .reader-nav { padding: 0 10px; gap: 6px; }
+            .reader-nav .book-title { font-size: 12px; }
+            .lesson-select { font-size: 11px; padding: 4px 8px; }
+            .nav-btn { width: 28px; height: 28px; font-size: 11px; }
+
+            .bilingual-layout {
+                grid-template-columns: 1fr; gap: 16px;
+            }
+
+            .reader-content { padding: 16px 16px 100px; }
+            .lesson-header { margin-bottom: 20px; padding: 16px 0; }
+
+            .words-section { padding: 14px 16px; }
+            .word-tag { padding: 4px 10px; font-size: 12px; }
+
+            .lang-body { padding: 12px 16px; }
+
+            .footer-nav-btn { padding: 6px 14px; font-size: 12px; }
+            .footer-nav-btn span.nav-label { display: none; }
+
+            .reader-footer { padding: 10px 12px; }
+        }
+
+        @media (max-width: 480px) {
+            .reader-nav .nav-back span { display: none; }
+            .reader-nav .book-title { font-size: 13px; }
+            .words-grid { gap: 6px; }
+            .word-tag { padding: 3px 8px; font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Content rendered by reader.js via base64 decoding -->
+    <div id="app-root"></div>
+
+    <script src="reader.js"></script>
+</body>
+</html>
