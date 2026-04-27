@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0a00;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#3d1500;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B0000;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="50%" style="stop-color:#FFA500" />
+      <stop offset="100%" style="stop-color:#FFD700" />
+    </linearGradient>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e" />
+      <stop offset="100%" style="stop-color:#1a0a00" />
+    </linearGradient>
+    <radialGradient id="glowGrad" cx="50%" cy="45%" r="40%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0" />
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="300" height="400" fill="url(#bgGrad)"/>
+
+  <!-- 天空星光 -->
+  <circle cx="50" cy="30" r="1.2" fill="#fff" opacity="0.6"/>
+  <circle cx="120" cy="18" r="0.8" fill="#fff" opacity="0.4"/>
+  <circle cx="200" cy="25" r="1" fill="#fff" opacity="0.5"/>
+  <circle cx="260" cy="40" r="0.7" fill="#fff" opacity="0.3"/>
+  <circle cx="30" cy="60" r="0.6" fill="#fff" opacity="0.4"/>
+  <circle cx="270" cy="15" r="1.1" fill="#fff" opacity="0.5"/>
+  <circle cx="170" cy="50" r="0.5" fill="#fff" opacity="0.3"/>
+
+  <!-- 金色佛光 -->
+  <ellipse cx="150" cy="160" rx="120" ry="90" fill="url(#glowGrad)"/>
+
+  <!-- 远山 -->
+  <path d="M0 280 Q30 240 60 260 Q90 230 120 250 Q150 220 180 245 Q210 225 240 255 Q270 235 300 260 L300 400 L0 400 Z" fill="#2a0a00" opacity="0.7"/>
+  <path d="M0 300 Q40 270 80 285 Q120 260 160 280 Q200 265 240 285 Q270 270 300 290 L300 400 L0 400 Z" fill="#1a0500" opacity="0.8"/>
+
+  <!-- 云彩 -->
+  <ellipse cx="60" cy="120" rx="30" ry="10" fill="#FFD700" opacity="0.08"/>
+  <ellipse cx="230" cy="100" rx="35" ry="12" fill="#FFD700" opacity="0.06"/>
+  <ellipse cx="150" cy="85" rx="40" ry="14" fill="#FFD700" opacity="0.07"/>
+
+  <!-- 古道/路径 -->
+  <path d="M30 380 Q80 350 130 340 Q180 330 230 320 Q260 315 280 300" fill="none" stroke="#8B6914" stroke-width="3" opacity="0.3" stroke-dasharray="8,6"/>
+
+  <!-- ===== 师徒四人剪影 ===== -->
+
+  <!-- 孙悟空（最前方，手持金箍棒） -->
+  <g transform="translate(195, 260)">
+    <!-- 身体 -->
+    <ellipse cx="0" cy="10" rx="8" ry="18" fill="#1a0800"/>
+    <!-- 头 -->
+    <circle cx="0" cy="-12" r="8" fill="#1a0800"/>
+    <!-- 凤翅紫金冠 -->
+    <path d="M-6,-20 L0,-28 L6,-20" fill="#DAA520" opacity="0.9"/>
+    <circle cx="0" cy="-28" r="2" fill="#FFD700"/>
+    <!-- 金箍棒 -->
+    <line x1="8" y1="-5" x2="35" y2="-30" stroke="#DAA520" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="35" cy="-30" r="2.5" fill="#FFD700"/>
+    <!-- 虎皮裙细节 -->
+    <rect x="-5" y="12" width="10" height="8" rx="2" fill="#8B6914" opacity="0.5"/>
+    <!-- 腿 -->
+    <line x1="-4" y1="28" x2="-6" y2="42" stroke="#1a0800" stroke-width="3" stroke-linecap="round"/>
+    <line x1="4" y1="28" x2="6" y2="42" stroke="#1a0800" stroke-width="3" stroke-linecap="round"/>
+    <!-- 脚/靴 -->
+    <ellipse cx="-7" cy="44" rx="4" ry="2" fill="#1a0800"/>
+    <ellipse cx="7" cy="44" rx="4" ry="2" fill="#1a0800"/>
+  </g>
+
+  <!-- 唐僧（中间，骑白马） -->
+  <g transform="translate(130, 250)">
+    <!-- 白龙马 -->
+    <ellipse cx="0" cy="20" rx="18" ry="10" fill="#d4c9a8" opacity="0.9"/>
+    <!-- 马头 -->
+    <ellipse cx="18" cy="10" rx="8" ry="6" fill="#d4c9a8" opacity="0.9" transform="rotate(-20,18,10)"/>
+    <!-- 马耳 -->
+    <path d="M14,4 L16,-2 L18,4" fill="#d4c9a8" opacity="0.9"/>
+    <!-- 马鬃 -->
+    <path d="M10,8 Q8,4 12,2" fill="none" stroke="#c0b090" stroke-width="1.5"/>
+    <!-- 马腿 -->
+    <line x1="-12" y1="30" x2="-14" y2="45" stroke="#d4c9a8" stroke-width="3" stroke-linecap="round"/>
+    <line x1="-4" y1="30" x2="-3" y2="45" stroke="#d4c9a8" stroke-width="3" stroke-linecap="round"/>
+    <line x1="8" y1="30" x2="10" y2="45" stroke="#d4c9a8" stroke-width="3" stroke-linecap="round"/>
+    <line x1="14" y1="30" x2="16" y2="45" stroke="#d4c9a8" stroke-width="3" stroke-linecap="round"/>
+    <!-- 唐僧身体（骑在马上） -->
+    <ellipse cx="-2" cy="2" rx="8" ry="14" fill="#C41E3A" opacity="0.85"/>
+    <!-- 袈裟 -->
+    <path d="M-10,0 L-2,-12 L6,0" fill="#C41E3A" opacity="0.7"/>
+    <!-- 唐僧头 -->
+    <circle cx="-2" cy="-18" r="7" fill="#d4a574" opacity="0.85"/>
+    <!-- 五佛冠 -->
+    <path d="M-8,-22 L-2,-30 L4,-22" fill="#FFD700" opacity="0.8"/>
+    <rect x="-6" y="-26" width="8" height="4" rx="1" fill="#FFD700" opacity="0.7"/>
+    <!-- 九环锡杖（在右手） -->
+    <line x1="6" y1="-5" x2="22" y2="-25" stroke="#DAA520" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="22" cy="-27" r="5" fill="none" stroke="#DAA520" stroke-width="1.5"/>
+    <circle cx="22" cy="-32" r="1.5" fill="#FFD700"/>
+  </g>
+
+  <!-- 猪八戒（唐僧左后方） -->
+  <g transform="translate(75, 268)">
+    <!-- 身体（胖） -->
+    <ellipse cx="0" cy="8" rx="12" ry="18" fill="#1a0800"/>
+    <!-- 头 -->
+    <circle cx="0" cy="-14" r="10" fill="#1a0800"/>
+    <!-- 猪耳朵 -->
+    <ellipse cx="-10" cy="-18" rx="5" ry="8" fill="#1a0800" transform="rotate(20,-10,-18)"/>
+    <ellipse cx="10" cy="-18" rx="5" ry="8" fill="#1a0800" transform="rotate(-20,10,-18)"/>
+    <!-- 九齿钉耙 -->
+    <line x1="-12" y1="0" x2="-35" y2="-20" stroke="#8B8B00" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M-38,-22 L-35,-18 L-32,-22 L-29,-18 L-26,-22 L-23,-18" fill="none" stroke="#8B8B00" stroke-width="1.5"/>
+    <!-- 腿 -->
+    <line x1="-6" y1="26" x2="-8" y2="40" stroke="#1a0800" stroke-width="4" stroke-linecap="round"/>
+    <line x1="6" y1="26" x2="8" y2="40" stroke="#1a0800" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- 沙僧（最后方，挑担） -->
+  <g transform="translate(45, 275)">
+    <!-- 身体 -->
+    <ellipse cx="0" cy="6" rx="9" ry="16" fill="#1a0800"/>
+    <!-- 头 -->
+    <circle cx="0" cy="-14" r="8" fill="#1a0800"/>
+    <!-- 佛珠项链 -->
+    <circle cx="-4" cy="-4" r="1.5" fill="#8B8B00" opacity="0.6"/>
+    <circle cx="0" cy="-2" r="1.5" fill="#8B8B00" opacity="0.6"/>
+    <circle cx="4" cy="-4" r="1.5" fill="#8B8B00" opacity="0.6"/>
+    <!-- 挑担（扁担） -->
+    <line x1="-5" y1="-8" x2="-30" y2="-18" stroke="#8B6914" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="5" y1="-8" x2="30" y2="-18" stroke="#8B6914" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- 行李 -->
+    <rect x="-38" y="-26" width="14" height="10" rx="2" fill="#2a1500" opacity="0.8"/>
+    <rect x="24" y="-26" width="14" height="10" rx="2" fill="#2a1500" opacity="0.8"/>
+    <!-- 降妖宝杖 -->
+    <line x1="8" y1="0" x2="25" y2="-15" stroke="#6B4226" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="26" cy="-16" r="3" fill="#8B8B00" opacity="0.6"/>
+    <!-- 腿 -->
+    <line x1="-4" y1="22" x2="-5" y2="36" stroke="#1a0800" stroke-width="3" stroke-linecap="round"/>
+    <line x1="4" y1="22" x2="5" y2="36" stroke="#1a0800" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===== 标题区域 ===== -->
+
+  <!-- 装饰框 -->
+  <rect x="30" y="15" width="240" height="70" rx="4" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- 西游记 -->
+  <text x="150" y="42" font-family="KaiTi, STKaiti, 楷体, serif" font-size="42" font-weight="bold" fill="url(#goldGrad)" text-anchor="middle" filter="url(#glow)">西游记</text>
+
+  <!-- 副标题 -->
+  <text x="150" y="65" font-family="KaiTi, STKaiti, 楷体, serif" font-size="13" fill="#DAA520" text-anchor="middle" opacity="0.8">Journey to the West</text>
+
+  <!-- 分隔线 -->
+  <line x1="80" y1="72" x2="220" y2="72" stroke="#DAA520" stroke-width="0.5" opacity="0.5"/>
+
+  <!-- 作者 -->
+  <text x="150" y="84" font-family="KaiTi, STKaiti, 楷体, serif" font-size="14" fill="#FFD700" text-anchor="middle" opacity="0.85">〔明〕吴承恩 著</text>
+
+  <!-- 底部装饰 -->
+  <rect x="0" y="370" width="300" height="30" fill="#0a0500" opacity="0.5"/>
+  <text x="150" y="390" font-family="KaiTi, STKaiti, 楷体, serif" font-size="11" fill="#8B6914" text-anchor="middle" opacity="0.6">中国古典四大名著之一 · 一百回</text>
+
+  <!-- 角落装饰 -->
+  <path d="M5,5 L25,5 M5,5 L5,25" stroke="#DAA520" stroke-width="1" opacity="0.4"/>
+  <path d="M295,5 L275,5 M295,5 L295,25" stroke="#DAA520" stroke-width="1" opacity="0.4"/>
+  <path d="M5,395 L25,395 M5,395 L5,375" stroke="#DAA520" stroke-width="1" opacity="0.4"/>
+  <path d="M295,395 L275,395 M295,395 L295,375" stroke="#DAA520" stroke-width="1" opacity="0.4"/>
+</svg>
