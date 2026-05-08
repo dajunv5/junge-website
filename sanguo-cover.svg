@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <linearGradient id="sgbgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628" />
+      <stop offset="40%" style="stop-color:#1a2a4a" />
+      <stop offset="100%" style="stop-color:#2c1810" />
+    </linearGradient>
+    <linearGradient id="sggoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="50%" style="stop-color:#DAA520" />
+      <stop offset="100%" style="stop-color:#FFD700" />
+    </linearGradient>
+    <linearGradient id="sgRedGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B0000" />
+      <stop offset="100%" style="stop-color:#4a0000" />
+    </linearGradient>
+    <filter id="sgglow">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="300" height="400" fill="url(#sgbgGrad)"/>
+
+  <!-- 战旗纹路 -->
+  <rect x="0" y="340" width="300" height="60" fill="url(#sgRedGold)" opacity="0.3"/>
+
+  <!-- 远山 -->
+  <path d="M0 300 Q50 260 100 280 Q140 250 180 270 Q220 245 260 265 Q290 250 300 260 L300 400 L0 400 Z" fill="#1a1520" opacity="0.6"/>
+  <path d="M0 320 Q60 290 120 310 Q170 285 220 305 Q260 290 300 300 L300 400 L0 400 Z" fill="#12101a" opacity="0.7"/>
+
+  <!-- 星空 -->
+  <circle cx="40" cy="30" r="1.2" fill="#fff" opacity="0.5"/>
+  <circle cx="100" cy="20" r="0.8" fill="#fff" opacity="0.4"/>
+  <circle cx="180" cy="35" r="1" fill="#fff" opacity="0.6"/>
+  <circle cx="250" cy="15" r="0.7" fill="#fff" opacity="0.3"/>
+  <circle cx="75" cy="55" r="0.6" fill="#fff" opacity="0.3"/>
+  <circle cx="220" cy="50" r="0.9" fill="#fff" opacity="0.4"/>
+
+  <!-- 月亮 -->
+  <circle cx="240" cy="80" r="20" fill="#FFD700" opacity="0.08"/>
+  <circle cx="240" cy="80" r="14" fill="#FFD700" opacity="0.06"/>
+
+  <!-- ===== 刘备（左，双耳垂肩，仁德之君） ===== -->
+  <g transform="translate(80, 255)">
+    <!-- 身体 -->
+    <ellipse cx="0" cy="12" rx="9" ry="18" fill="#1a1a2e"/>
+    <!-- 汉服 -->
+    <path d="M-9,0 L0,-12 L9,0" fill="#8B0000" opacity="0.7"/>
+    <!-- 头 -->
+    <circle cx="0" cy="-16" r="8" fill="#c4a882" opacity="0.85"/>
+    <!-- 双耳（大耳） -->
+    <ellipse cx="-9" cy="-14" rx="4" ry="6" fill="#c4a882" opacity="0.7"/>
+    <ellipse cx="9" cy="-14" rx="4" ry="6" fill="#c4a882" opacity="0.7"/>
+    <!-- 冠 -->
+    <rect x="-6" y="-26" width="12" height="5" rx="1" fill="#DAA520" opacity="0.7"/>
+    <!-- 双股剑 -->
+    <line x1="8" y1="-4" x2="24" y2="-24" stroke="#C0C0C0" stroke-width="1.5"/>
+    <line x1="11" y1="-2" x2="27" y2="-22" stroke="#C0C0C0" stroke-width="1.5"/>
+    <!-- 腿 -->
+    <line x1="-4" y1="30" x2="-5" y2="44" stroke="#1a1a2e" stroke-width="3" stroke-linecap="round"/>
+    <line x1="4" y1="30" x2="5" y2="44" stroke="#1a1a2e" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===== 关羽（中，青龙偃月刀，赤面长髯） ===== -->
+  <g transform="translate(150, 235)">
+    <!-- 身体（高大） -->
+    <ellipse cx="0" cy="14" rx="10" ry="22" fill="#1a1a2e"/>
+    <!-- 绿袍 -->
+    <path d="M-10,0 L0,-14 L10,0" fill="#006400" opacity="0.65"/>
+    <ellipse cx="0" cy="20" rx="12" ry="14" fill="#006400" opacity="0.3"/>
+    <!-- 头（赤面） -->
+    <circle cx="0" cy="-16" r="9" fill="#c0392b" opacity="0.8"/>
+    <!-- 长髯 -->
+    <path d="M-3,-8 Q-4,4 -2,12" fill="none" stroke="#1a1a2e" stroke-width="2" stroke-linecap="round"/>
+    <path d="M3,-8 Q4,4 2,12" fill="none" stroke="#1a1a2e" stroke-width="2" stroke-linecap="round"/>
+    <!-- 侯冠 -->
+    <path d="M-7,-24 L0,-32 L7,-24" fill="#DAA520" opacity="0.8"/>
+    <rect x="-5" y="-28" width="10" height="4" rx="1" fill="#FFD700" opacity="0.7"/>
+    <!-- 青龙偃月刀 -->
+    <line x1="10" y1="0" x2="35" y2="-30" stroke="#8B8B00" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M32,-33 Q38,-38 40,-30 Q42,-24 36,-26" fill="#8B8B00" opacity="0.9"/>
+    <circle cx="40" cy="-30" r="1.5" fill="#FFD700" opacity="0.6"/>
+    <!-- 腿 -->
+    <line x1="-5" y1="36" x2="-6" y2="52" stroke="#1a1a2e" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="5" y1="36" x2="6" y2="52" stroke="#1a1a2e" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===== 张飞（右，丈八蛇矛，黑脸暴睛） ===== -->
+  <g transform="translate(220, 258)">
+    <!-- 身体 -->
+    <ellipse cx="0" cy="10" rx="9" ry="17" fill="#1a1a2e"/>
+    <!-- 黑甲 -->
+    <path d="M-9,-2 L0,-12 L9,-2" fill="#1a1a1a" opacity="0.6"/>
+    <!-- 头（黑面） -->
+    <circle cx="0" cy="-14" r="8" fill="#2c1810" opacity="0.9"/>
+    <!-- 环眼（怒目） -->
+    <circle cx="-3" cy="-15" r="2" fill="#fff" opacity="0.7"/>
+    <circle cx="3" cy="-15" r="2" fill="#fff" opacity="0.7"/>
+    <circle cx="-3" cy="-15" r="1" fill="#000"/>
+    <circle cx="3" cy="-15" r="1" fill="#000"/>
+    <!-- 虬髯 -->
+    <path d="M-5,-10 Q-6,-6 -4,-4" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+    <path d="M5,-10 Q6,-6 4,-4" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+    <!-- 丈八蛇矛 -->
+    <line x1="-8" y1="-4" x2="-32" y2="-28" stroke="#8B8B00" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M-34,-30 L-30,-34 L-28,-28" fill="#8B8B00" opacity="0.9"/>
+    <!-- 腿 -->
+    <line x1="-4" y1="27" x2="-5" y2="42" stroke="#1a1a2e" stroke-width="3" stroke-linecap="round"/>
+    <line x1="4" y1="27" x2="5" y2="42" stroke="#1a1a2e" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===== 标题区域 ===== -->
+  <rect x="25" y="12" width="250" height="80" rx="4" fill="none" stroke="url(#sggoldGrad)" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- 三国演义 -->
+  <text x="150" y="46" font-family="KaiTi, STKaiti, 楷体, serif" font-size="38" font-weight="bold" fill="url(#sggoldGrad)" text-anchor="middle" filter="url(#sgglow)">三国演义</text>
+
+  <!-- 英文副标题 -->
+  <text x="150" y="66" font-family="Georgia, serif" font-size="11" fill="#DAA520" text-anchor="middle" opacity="0.7" font-style="italic">Romance of the Three Kingdoms</text>
+
+  <!-- 分隔线 -->
+  <line x1="75" y1="73" x2="225" y2="73" stroke="#DAA520" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- 作者 -->
+  <text x="150" y="86" font-family="KaiTi, STKaiti, 楷体, serif" font-size="13" fill="#FFD700" text-anchor="middle" opacity="0.8">〔元末明初〕罗贯中 著</text>
+
+  <!-- 底部装饰 -->
+  <rect x="0" y="372" width="300" height="28" fill="#0a0500" opacity="0.5"/>
+  <text x="150" y="390" font-family="KaiTi, STKaiti, 楷体, serif" font-size="11" fill="#8B6914" text-anchor="middle" opacity="0.5">中国古典四大名著之一 · 一百二十回</text>
+
+  <!-- 角落装饰 -->
+  <path d="M5,5 L25,5 M5,5 L5,25" stroke="#DAA520" stroke-width="1" opacity="0.3"/>
+  <path d="M295,5 L275,5 M295,5 L295,25" stroke="#DAA520" stroke-width="1" opacity="0.3"/>
+  <path d="M5,395 L25,395 M5,395 L5,375" stroke="#DAA520" stroke-width="1" opacity="0.3"/>
+  <path d="M295,395 L275,395 M295,395 L295,375" stroke="#DAA520" stroke-width="1" opacity="0.3"/>
+</svg>
