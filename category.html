@@ -99,6 +99,13 @@
     </nav>
 
     <script>
+    // 时间自动主题（需在渲染前执行，避免闪烁）
+    (function(){
+        var hour = new Date().getHours();
+        if (hour >= 6 && hour < 18) document.documentElement.classList.add('day-theme');
+    })();
+    </script>
+    <script>
     (function(){
     'use strict';
 
@@ -169,6 +176,13 @@
 
     /* ===== 初始化 ===== */
     function init() {
+        // 时间自动主题
+        var hour = new Date().getHours();
+        var isDay = hour >= 6 && hour < 18;
+        document.body.classList.toggle('day-theme', isDay);
+        var themeColor = document.querySelector('meta[name="theme-color"]');
+        if (themeColor) themeColor.content = isDay ? '#f5f5f7' : '#000000';
+
         var params = new URLSearchParams(location.search);
         var catId = params.get('cat');
         var searchQuery = params.get('search');

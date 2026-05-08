@@ -419,13 +419,29 @@ function initThemeButton() {
 }
 
 function applyTheme() {
-    var theme = localStorage.getItem('theme') || 'dark';
-    if (theme === 'light') document.body.classList.add('light-theme');
+    var theme = localStorage.getItem('theme') || 'light';
+    if (theme === 'light') {
+        document.body.classList.add('light-theme');
+    } else {
+        document.body.classList.remove('light-theme');
+    }
+    updateThemeIcon();
 }
 
 function toggleTheme() {
     document.body.classList.toggle('light-theme');
-    localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+    var isLight = document.body.classList.contains('light-theme');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    updateThemeIcon();
+}
+
+function updateThemeIcon() {
+    var themeBtn = document.getElementById('themeBtn');
+    if (!themeBtn) return;
+    var icon = themeBtn.querySelector('i');
+    if (!icon) return;
+    var isLight = document.body.classList.contains('light-theme');
+    icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
 }
 
 /* ========== 工具函数 ========== */
