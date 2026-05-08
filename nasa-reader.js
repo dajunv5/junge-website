@@ -248,7 +248,7 @@ const TOTAL=currentBook.lessons.length;
 const lp=params.get('lesson');
 if(lp){const n=parseInt(lp);if(n>=1&&n<=TOTAL)currentLesson=n;}
 
-document.title=currentBook.titleCn+' - 私人订制书窗';
+document.title=currentBook.titleCn+' - 有意思的书窗';
 const root=document.getElementById('app-root');
 root.innerHTML=`
 <nav class="reader-nav">

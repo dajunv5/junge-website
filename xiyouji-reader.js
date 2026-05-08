@@ -45,7 +45,7 @@ function renderChapter() {
     var chapter = XIYOUJI_DATA[currentChapterIdx];
     if (!chapter) return;
 
-    document.title = '第' + numToChinese(chapter.id) + '回 ' + chapter.title + ' - 西游记 - 私人订制书窗';
+    document.title = '第' + numToChinese(chapter.id) + '回 ' + chapter.title + ' - 西游记 - 有意思的书窗';
 
     // 导航标题
     var titleEl = document.getElementById('navTitle');

@@ -45,7 +45,7 @@ function renderChapter() {
     var chapter = SHUIHU_DATA[currentChapterIdx];
     if (!chapter) return;
 
-    document.title = '第' + numToChinese(chapter.id) + '回 ' + chapter.title.replace(/^第[一二三四五六七八九十百零\d]+回[\s　]*/, '') + ' - 水浒传 - 私人订制书窗';
+    document.title = '第' + numToChinese(chapter.id) + '回 ' + chapter.title.replace(/^第[一二三四五六七八九十百零\d]+回[\s　]*/, '') + ' - 水浒传 - 有意思的书窗';
 
     // 导航标题
     var titleEl = document.getElementById('navTitle');

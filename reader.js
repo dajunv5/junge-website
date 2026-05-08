@@ -1,4 +1,4 @@
-/* ===== 私人订制书窗 - 双语对照阅读器 ===== */
+/* ===== 有意思的书窗 - 双语对照阅读器 ===== */
 
 (function() {
     'use strict';
@@ -436,7 +436,7 @@
     function renderApp() {
         const root = document.getElementById('app-root');
         root.innerHTML = _b64Decode(_mainHTML);
-        document.title = '双语对照阅读 - 私人订制书窗';
+        document.title = '双语对照阅读 - 有意思的书窗';
 
         // Restore state
         const savedFont = localStorage.getItem(LS_FONT);
