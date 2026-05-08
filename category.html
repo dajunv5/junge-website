@@ -252,6 +252,23 @@
         });
 
         container.innerHTML = html;
+
+        // 滚动动画：给 .feed-card 添加 .visible 使其可见
+        var cards = container.querySelectorAll('.feed-card');
+        if ('IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            cards.forEach(function(c) { obs.observe(c); });
+        } else {
+            // 降级：直接显示
+            cards.forEach(function(c) { c.classList.add('visible'); });
+        }
     }
 
     function initSearch(catId) {
