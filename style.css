@@ -237,6 +237,52 @@ a { text-decoration: none; color: inherit; }
 .feed-empty i { font-size: 40px; margin-bottom: 12px; opacity: 0.3; }
 .feed-empty p { font-size: 14px; }
 
+/* ===== 分类卡片网格（首页） ===== */
+.cat-grid {
+    max-width: 960px; margin: 0 auto; padding: 4px 16px 20px;
+}
+.cat-grid-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px; margin-bottom: 10px;
+    background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-md); text-decoration: none;
+    transition: all 0.2s; position: relative; overflow: hidden;
+}
+.cat-grid-item:hover {
+    background: var(--bg-card-hover); border-color: rgba(255,255,255,0.1);
+    transform: translateY(-1px);
+}
+.cat-grid-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: var(--cat-color); font-size: 20px;
+}
+.cat-grid-info {
+    flex: 1; min-width: 0;
+}
+.cat-grid-info h3 {
+    font-size: 16px; font-weight: 600; color: var(--text-primary);
+    margin-bottom: 2px;
+}
+.cat-grid-info span {
+    font-size: 12px; color: var(--text-tertiary);
+}
+.cat-grid-arrow {
+    color: var(--text-tertiary); font-size: 12px; flex-shrink: 0;
+    opacity: 0.4; transition: all 0.2s;
+}
+.cat-grid-item:hover .cat-grid-arrow {
+    opacity: 0.8; transform: translateX(2px); color: var(--cat-color);
+}
+
+@media (min-width: 768px) {
+    .cat-grid { padding: 8px 24px 24px; }
+    .cat-grid-item { padding: 20px; gap: 18px; }
+    .cat-grid-icon { width: 56px; height: 56px; font-size: 24px; }
+    .cat-grid-info h3 { font-size: 18px; }
+}
+
 /* ===== 关于区域 ===== */
 .about-section {
     padding: 40px 16px; border-top: 0.5px solid rgba(255,255,255,0.06);

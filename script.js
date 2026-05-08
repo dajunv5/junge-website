@@ -155,43 +155,21 @@
             startAutoPlay();
         }, { passive: true });
 
-        // ===== 搜索功能 =====
+        // ===== 搜索功能（跳转category.html搜索） =====
         const searchInput = document.getElementById('searchInput');
         const searchClear = document.getElementById('searchClear');
-        const feedEmpty = document.getElementById('feedEmpty');
-        const feedCards = document.querySelectorAll('.feed-card');
-        const feedCategories = document.querySelectorAll('.feed-category');
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim();
+                if (query) {
+                    location.href = 'category.html?search=' + encodeURIComponent(query);
+                }
+            }
+        });
 
         searchInput.addEventListener('input', function() {
-            const query = this.value.trim().toLowerCase();
-            searchClear.classList.toggle('show', query.length > 0);
-
-            if (!query) {
-                // 清空搜索，显示全部
-                feedCards.forEach(c => c.style.display = '');
-                feedCategories.forEach(c => c.style.display = '');
-                feedEmpty.style.display = 'none';
-                return;
-            }
-
-            let hasResult = false;
-            feedCategories.forEach(cat => {
-                const cards = cat.querySelectorAll('.feed-card');
-                let catHasVisible = false;
-                cards.forEach(card => {
-                    const title = (card.querySelector('h4')?.textContent || '').toLowerCase();
-                    const titleCn = (card.querySelector('.feed-title-cn')?.textContent || '').toLowerCase();
-                    const desc = (card.querySelector('.feed-desc')?.textContent || '').toLowerCase();
-                    const author = (card.querySelector('.feed-meta')?.textContent || '').toLowerCase();
-                    const match = title.includes(query) || titleCn.includes(query) || desc.includes(query) || author.includes(query);
-                    card.style.display = match ? '' : 'none';
-                    if (match) catHasVisible = true;
-                });
-                cat.style.display = catHasVisible ? '' : 'none';
-                if (catHasVisible) hasResult = true;
-            });
-
-            feedEmpty.style.display = hasResult ? 'none' : '';
+            searchClear.classList.toggle('show', this.value.trim().length > 0);
         });
 
         searchClear.addEventListener('click', () => {
@@ -247,9 +225,9 @@
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
 
-        feedCards.forEach((card, i) => {
-            card.style.transitionDelay = (i % 6) * 60 + 'ms';
-            observer.observe(card);
+        document.querySelectorAll('.cat-grid-item').forEach((item, i) => {
+            item.style.transitionDelay = i * 60 + 'ms';
+            observer.observe(item);
         });
 
     });

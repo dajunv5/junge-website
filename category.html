@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <title>分类 - 有意思的书窗</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { padding-top: 0 !important; }
+        .cat-page { min-height: 100vh; min-height: 100dvh; background: var(--bg-primary); padding-bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + 20px); }
+
+        /* 顶部导航 */
+        .cat-nav {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--top-bar-h); z-index: 1000;
+            background: rgba(0,0,0,0.85); backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; padding: 0 12px; gap: 8px;
+        }
+        .cat-nav .back-btn {
+            display: flex; align-items: center; gap: 4px;
+            font-size: 13px; color: var(--accent-blue); font-weight: 500;
+            text-decoration: none; min-height: 44px;
+        }
+        .cat-nav .back-btn:hover { opacity: 0.8; }
+        .cat-nav .cat-title {
+            flex: 1; font-size: 16px; font-weight: 600; color: var(--text-primary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        /* 搜索框 */
+        .cat-search {
+            max-width: 960px; margin: 0 auto; padding: calc(var(--top-bar-h) + 12px) 16px 8px;
+        }
+        .cat-search-box {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px; padding: 0 12px; height: 40px;
+        }
+        .cat-search-box i { color: var(--text-tertiary); font-size: 13px; }
+        .cat-search-box input {
+            flex: 1; background: none; border: none; outline: none;
+            color: var(--text-primary); font-size: 14px; font-family: inherit;
+        }
+        .cat-search-box input::placeholder { color: var(--text-tertiary); }
+
+        /* 书卡列表 */
+        .cat-books {
+            max-width: 960px; margin: 0 auto; padding: 4px 16px 20px;
+        }
+        .cat-count {
+            font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px;
+        }
+        .cat-books .feed-card { margin-bottom: 10px; }
+
+        .cat-empty {
+            text-align: center; padding: 60px 20px; color: var(--text-tertiary);
+        }
+        .cat-empty i { font-size: 36px; margin-bottom: 12px; display: block; opacity: 0.3; }
+    </style>
+</head>
+<body>
+    <div class="cat-page">
+        <!-- 顶部导航 -->
+        <nav class="cat-nav">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 首页</a>
+            <span class="cat-title" id="catTitle">分类</span>
+        </nav>
+
+        <!-- 搜索 -->
+        <div class="cat-search">
+            <div class="cat-search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="搜索书名、作者..." autocomplete="off">
+            </div>
+        </div>
+
+        <!-- 书卡列表 -->
+        <div class="cat-books" id="catBooks">
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <nav class="bottom-nav" id="bottomNav">
+        <a href="index.html" class="bottom-nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="#" class="bottom-nav-item active">
+            <i class="fas fa-th-large"></i>
+            <span>分类</span>
+        </a>
+        <a href="index.html#about" class="bottom-nav-item">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </a>
+    </nav>
+
+    <script>
+    (function(){
+    'use strict';
+
+    /* ===== 分类数据 ===== */
+    var CATEGORIES = {
+        language: {
+            name: '语文 / 阅读',
+            icon: 'fa-language',
+            color: '#2997ff',
+            books: [
+                { title: "McGuffey's Primer", titleCn: '麦加菲启蒙读本', desc: '美国最经典的启蒙教材，从字母开始，循序渐进学习基础英语阅读', author: 'W.H. McGuffey', time: '约3小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #2997ff 0%, #5e5ce6 100%)', coverIcon: 'fa-book', grade: 'K-1', link: 'reader.html?book=primer&lesson=1' },
+                { title: "McGuffey's First Reader", titleCn: '麦加菲第一读本', desc: '在启蒙基础上进一步扩展词汇量，引入短文和简单故事', author: 'W.H. McGuffey', time: '约5小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #5e5ce6 0%, #bf5af2 100%)', coverIcon: 'fa-book', grade: '1-2', link: 'reader.html?book=first&lesson=1' },
+                { title: "McGuffey's Second Reader", titleCn: '麦加菲第二读本', desc: '精选文学选篇，培养阅读理解能力和文学素养', author: 'W.H. McGuffey', time: '约8小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #bf5af2 0%, #ff375f 100%)', coverIcon: 'fa-book', grade: '2-3', link: 'reader.html?book=second&lesson=1' },
+                { title: "McGuffey's Third Reader", titleCn: '麦加菲第三读本', desc: '进阶阅读，涵盖散文、诗歌、历史故事等多种文体', author: 'W.H. McGuffey', time: '约10小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #ff375f 0%, #ff453a 100%)', coverIcon: 'fa-book', grade: '3-4', link: 'reader.html?book=third&lesson=1' }
+            ]
+        },
+        finance: {
+            name: '金融',
+            icon: 'fa-chart-line',
+            color: '#30d158',
+            books: [
+                { title: "Ray's New Primary Arithmetic", titleCn: '雷氏初级算术', desc: '从数字认知到加减法运算，打好数学基础', author: 'Joseph Ray', time: '约4小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #30d158 0%, #34c759 100%)', coverIcon: 'fa-calculator', grade: '1-2', link: '#' },
+                { title: "Ray's New Intellectual Arithmetic", titleCn: '雷氏心智算术', desc: '纯心算训练，不用纸笔，锻炼数学思维', author: 'Joseph Ray', time: '约6小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #34c759 0%, #30d158 100%)', coverIcon: 'fa-calculator', grade: '3-4', link: '#' }
+            ]
+        },
+        science: {
+            name: '科学 / 自然',
+            icon: 'fa-flask',
+            color: '#ff9f0a',
+            books: [
+                { title: 'The Story Book of Science', titleCn: '科学故事书', desc: '法布尔以故事形式讲述科学知识，引人入胜', author: 'Jean-Henri Fabre', time: '约12小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #ff9f0a 0%, #ff6b35 100%)', coverIcon: 'fa-flask', grade: '3-5', link: '#' },
+                { title: 'Among the Pond People', titleCn: '池塘里的居民', desc: '走进池塘生态，认识青蛙、蜻蜓等小动物的生活', author: 'Clara D. Pierson', time: '约6小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #ff6b35 0%, #e85d04 100%)', coverIcon: 'fa-frog', grade: '2-4', link: '#' },
+                { title: 'The Burgess Animal Book', titleCn: '伯吉斯动物书', desc: '以故事形式介绍北美动物，兼具趣味与知识', author: 'Thornton W. Burgess', time: '约10小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #ff453a 0%, #ff375f 100%)', coverIcon: 'fa-paw', grade: '3-5', link: '#' },
+                { title: 'Among the Forest People', titleCn: '森林里的居民', desc: '走进森林，了解鸟儿、松鼠和其他森林生物', author: 'Clara D. Pierson', time: '约6小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #e85d04 0%, #ff9f0a 100%)', coverIcon: 'fa-tree', grade: '2-4', link: '#' }
+            ]
+        },
+        history: {
+            name: '历史',
+            icon: 'fa-landmark',
+            color: '#bf5af2',
+            books: [
+                { title: '三国演义', titleCn: '中国古典四大名著之一', desc: '滚滚长江东逝水，浪花淘尽英雄。刘关张桃园结义，三国纷争一百二十回', author: '罗贯中', time: '约60小时', tag: '公共领域', tagClass: 'pd', coverImg: 'sanguo-cover.svg', link: 'sanguo-reader.html?chapter=0' },
+                { title: '水浒传', titleCn: '中国古典四大名著之一', desc: '一百零八将替天行道，聚义梁山。武松打虎、林冲雪夜上梁山，英雄传奇一百二十回', author: '施耐庵', time: '约55小时', tag: '公共领域', tagClass: 'pd', coverImg: 'shuihu-cover.svg', link: 'shuihu-reader.html?chapter=0' },
+                { title: '西游记', titleCn: '中国古典四大名著之一', desc: '美猴王横空出世，拜师菩提，大闹天宫，西天取经，百回巨著尽在此处', author: '吴承恩', time: '约50小时', tag: '公共领域', tagClass: 'pd', coverImg: 'xiyouji-cover.svg', link: 'xiyouji-reader.html?chapter=0' },
+                { title: '红楼梦', titleCn: '中国古典四大名著之一', desc: '贾宝玉与林黛玉的爱情悲歌，大观园的兴衰荣辱，中国文学的巅峰之作', author: '曹雪芹', time: '约65小时', tag: '公共领域', tagClass: 'pd', coverImg: 'honglou-cover.svg', link: 'honglou-reader.html?chapter=0' }
+            ]
+        },
+        geography: {
+            name: '地理 / 文化',
+            icon: 'fa-globe-americas',
+            color: '#0077ed',
+            books: [
+                { title: 'Home Geography for Primary Grades', titleCn: '小学家庭地理', desc: '从身边环境认识地理概念，培养空间思维', author: 'C.C. Long', time: '约3小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #2997ff 0%, #0077ed 100%)', coverIcon: 'fa-globe-americas', grade: '1-3', link: '#' },
+                { title: 'The Seven Little Sisters', titleCn: '七个小姐妹', desc: '以七个女孩代表七大洲，讲述世界人文地理', author: 'Jane Andrews', time: '约5小时', tag: '公共领域', tagClass: 'pd', cover: 'linear-gradient(135deg, #0077ed 0%, #2997ff 100%)', coverIcon: 'fa-globe-asia', grade: '2-4', link: '#' }
+            ]
+        },
+        nasa: {
+            name: 'NASA 科普',
+            icon: 'fa-rocket',
+            color: '#32d74b',
+            books: [
+                { title: 'Elementary GLOBE: Earth System', titleCn: '地球系统科学故事书', desc: 'NASA官方出品，孩子们扮演地球系统不同角色，发现彼此相连', author: 'NASA/GLOBE', time: '约30分钟', tag: '政府出版物', tagClass: 'gov', cover: 'linear-gradient(135deg, #30d158 0%, #32d74b 100%)', coverIcon: 'fa-earth-americas', grade: 'K-4', link: 'nasa-reader.html?book=earth&lesson=1' },
+                { title: 'Elementary GLOBE: Clouds', titleCn: '云和天气故事书', desc: '认识卷云、积云、层云，发现云也有名字，还了解飞机尾迹云', author: 'NASA/GLOBE', time: '约30分钟', tag: '政府出版物', tagClass: 'gov', cover: 'linear-gradient(135deg, #32d74b 0%, #63e6be 100%)', coverIcon: 'fa-cloud', grade: 'K-4', link: 'nasa-reader.html?book=clouds&lesson=1' },
+                { title: 'Amazing International Space Station', titleCn: '神奇的国际空间站', desc: '国际空间站是什么？宇航员如何在太空生活？趣味知识全揭秘', author: 'NASA', time: '约40分钟', tag: '政府出版物', tagClass: 'gov', cover: 'linear-gradient(135deg, #63e6be 0%, #30d158 100%)', coverIcon: 'fa-rocket', grade: 'K-4', link: 'nasa-reader.html?book=iss&lesson=1' }
+            ]
+        }
+    };
+
+    /* ===== 初始化 ===== */
+    function init() {
+        var params = new URLSearchParams(location.search);
+        var catId = params.get('cat');
+        var searchQuery = params.get('search');
+
+        if (catId && CATEGORIES[catId]) {
+            renderCategory(catId);
+        } else if (searchQuery) {
+            renderSearch(searchQuery);
+        } else {
+            renderAll();
+        }
+
+        initSearch(catId);
+    }
+
+    function renderCategory(catId) {
+        var cat = CATEGORIES[catId];
+        document.title = cat.name + ' - 有意思的书窗';
+        document.getElementById('catTitle').textContent = cat.name;
+        renderBooks(cat.books);
+    }
+
+    function renderSearch(query) {
+        document.title = '搜索: ' + query + ' - 有意思的书窗';
+        document.getElementById('catTitle').textContent = '搜索结果';
+        var q = query.toLowerCase();
+        var results = [];
+        Object.keys(CATEGORIES).forEach(function(key) {
+            CATEGORIES[key].books.forEach(function(b) {
+                if (b.title.toLowerCase().indexOf(q) !== -1 || b.titleCn.indexOf(q) !== -1 || b.author.toLowerCase().indexOf(q) !== -1 || b.desc.indexOf(q) !== -1) {
+                    results.push(b);
+                }
+            });
+        });
+        renderBooks(results, '找到 ' + results.length + ' 本相关书籍');
+    }
+
+    function renderAll() {
+        document.title = '全部分类 - 有意思的书窗';
+        document.getElementById('catTitle').textContent = '全部分类';
+        var all = [];
+        Object.keys(CATEGORIES).forEach(function(key) {
+            CATEGORIES[key].books.forEach(function(b) { all.push(b); });
+        });
+        renderBooks(all, '共 ' + all.length + ' 本');
+    }
+
+    function renderBooks(books, countText) {
+        var container = document.getElementById('catBooks');
+        if (!books || books.length === 0) {
+            container.innerHTML = '<div class="cat-empty"><i class="fas fa-search"></i><p>没有找到相关书籍</p></div>';
+            return;
+        }
+
+        var html = '';
+        if (countText) html += '<div class="cat-count">' + countText + '</div>';
+
+        books.forEach(function(b) {
+            html += '<a href="' + b.link + '" class="feed-card">';
+            // 封面
+            if (b.coverImg) {
+                html += '<div class="feed-cover" style="background: url(\'' + b.coverImg + '\') center/cover no-repeat;"></div>';
+            } else {
+                html += '<div class="feed-cover" style="background: ' + b.cover + ';">';
+                html += '<i class="fas ' + b.coverIcon + '"></i>';
+                if (b.grade) html += '<span class="feed-grade">' + b.grade + '</span>';
+                html += '</div>';
+            }
+            // 正文
+            html += '<div class="feed-body">';
+            html += '<h4>' + b.title + '</h4>';
+            html += '<p class="feed-title-cn">' + b.titleCn + '</p>';
+            html += '<p class="feed-desc">' + b.desc + '</p>';
+            html += '<div class="feed-meta">';
+            html += '<span><i class="fas fa-user"></i> ' + b.author + '</span>';
+            html += '<span><i class="fas fa-clock"></i> ' + b.time + '</span>';
+            html += '<span class="feed-tag ' + b.tagClass + '">' + b.tag + '</span>';
+            html += '</div>';
+            html += '</div>';
+            html += '</a>';
+        });
+
+        container.innerHTML = html;
+    }
+
+    function initSearch(catId) {
+        var input = document.getElementById('searchInput');
+        var params = new URLSearchParams(location.search);
+        var sq = params.get('search');
+        if (sq) input.value = sq;
+
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                var val = input.value.trim();
+                if (val) {
+                    if (catId) {
+                        location.href = 'category.html?search=' + encodeURIComponent(val);
+                    } else {
+                        location.href = 'category.html?search=' + encodeURIComponent(val);
+                    }
+                }
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+    })();
+    </script>
+</body>
+</html>
