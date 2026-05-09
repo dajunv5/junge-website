@@ -1,0 +1,39 @@
+/* The Wealth of Nations - Adam Smith (1776) */
+/* Public Domain Text */
+var WEALTH_DATA = [
+{
+    id: 1,
+    book: 'Introduction',
+    title: 'Introduction',
+    subtitle: 'An Inquiry into the Nature and Causes of the Wealth of Nations',
+    content: 'THE annual labour of every nation is the fund which originally supplies all the necessaries and conveniences of life which the inhabitants of that nation annually consume. This fund consists, in the first place, in the produce of their own labour, either immediate, or processed by means of some part of it.\n\nWhatever is immediately produced by labour, or replaced by labour, is what we call the produce of land, of mines, and of fisheries. These yield the rude materials of industry, which is afterwards processed by manufacturing labour.\n\nThe greater part of these materials is still the produce of land and labour; but as some part of them is the produce of the sea, of lakes, and of rivers, we must class them together under the general name of the produce of land.\n\nThe produce of land, mines, and fisheries, is continually diminished by the consumption and waste of their productive labour. Yet at the same time, it is continually increased by the industry of man.\n\nThe natural difference of natural talents is much less than we are aware of. The difference between the most different characters, between a philosopher and a common street porter, for example, seems to arise not so much from nature as from habit, custom, and education.\n\nWhen the constitution of the mind is supposed to be so different, that one man should be born with a peculiar genius and taste for certain occupations, the difference between him and another man of common understanding is not near so great as is commonly imagined.'
+},
+{
+    id: 2,
+    book: 'Book I',
+    title: 'Book I: Of the Causes of Improvement in the Productive Labour',
+    subtitle: 'Chapter 1: Of the Division of Labour',
+    content: 'THE greatest improvement in the productive powers of labour, and the greater part of the skill, dexterity, and judgment with which it is anywhere directed, seem to have been the effects of the division of labour.\n\nThe effects of the division of labour are so generally known, that I shall make no apology for illustrating them by a few examples. In the way in which this business is now carried on, not only the whole work is a peculiar trade, but it is a peculiar trade into which a great number of workpeople are subdivided.\n\nA common smith, who has never been accustomed to make nails, can with hard labour and much practice, make perhaps eight or ten nails in a day. But a nail-maker who has never been accustomed to any other business, can scarce ever, with his utmost pains, make more than two thousand nails in a day.\n\nThe different operations into which the making of a pin, or of a metal button, is subdivided, are all of them peculiar trades, some of which are even proper to be carried on by separate hands.\n\nI have seen a small manufactory of this kind where ten men only were employed, and where some of them consequently performed two or three distinct operations. But though they were very poor, and therefore but indifferently accommodated with the necessary machinery, they could, when they exerted themselves, make among them about twelve pounds of pins in a day.\n\nThere are in a pin manufactory about eighteen distinct operations, which are in some cases performed by distinct hands, though in others by the same person.'
+},
+{
+    id: 3,
+    book: 'Book II',
+    title: 'Book II: Of the Nature, Accumulation, and Employment of Stock',
+    subtitle: 'Chapter 1: Of the Division of Stock',
+    content: 'WHEN the stock which a man possesses is no more than what is sufficient to maintain him for a few days or a few weeks, he seldom thinks of deriving any revenue from it. He consumes it as he goes along, and he is almost always in a condition of indigence.\n\nWhen he possesses stock sufficient to maintain him for months or years, he naturally thinks of deriving a profit from it. He either exchanges it for the produce of the labour of other workers, or he lends it to others in expectation of a revenue or profit.\n\nHis whole stock is thus distinguished into two parts. The part which he expects to afford him this revenue is called his capital. The other part is that which supplies his immediate consumption.\n\nThe capital may be employed in four different ways: either in the improvement of land, in the manufacturing of raw materials into manufactured goods, or in the transport of goods from one place to another, or in the retail trade.\n\nThese four ways seem to comprise all the methods in which a capital can be employed for the purpose of obtaining a revenue or profit.\n\nFirst, the capital that is employed in the improvement of land, in the purchase of useful machines and instruments, or in the acquisition of such other stock as can be employed in agriculture or in any other species of industry which yields a revenue.'
+},
+{
+    id: 4,
+    book: 'Book III',
+    title: 'Book III: Of the different Progress of Opulence in different Nations',
+    subtitle: 'Chapter 1: Of the natural Progress of Opulence',
+    content: 'THE great commerce of every civilized society is that carried on between the inhabitants of the town and those of the country. It consists in the exchange of the rude for the manufactured produce of the latter.\n\nThe country supplies the town with the means of subsistence and the materials of manufacture. The town returns to the country the manufactured produce, partly as materials for further manufacture, and partly as goods for the consumption of the country gentlemen and farmers.\n\nThe town cannot continue to flourish without the country, nor can the country without the town. The country is the source of all the materials and provisions upon which the town depends.\n\nIn years of scarcity, the country gentlemen and farmers, having less to give in exchange for the manufactured goods of the town, are less disposed to purchase them. They have less money to lay out in this manner.\n\nThe town, however, feels the inconvenience of this change in the same manner, but much more sensibly. It not only loses the employment of the people who were originally engaged in the manufacture of unnecessary superfluities, but also finds some difficulty in procuring the provisions necessary for the subsistence of those who are employed in the necessary branches of its trade.'
+},
+{
+    id: 5,
+    book: 'Book IV',
+    title: 'Book IV: Of Systems of political Economy',
+    subtitle: 'Chapter 1: Of the Principle of the commercial or mercantile System',
+    content: 'THE commercial system, or mercantile system, is a system of political economy which represents the wealth of a nation to consist, not as in the land and labour of its inhabitants, as in the quantity of the precious metals which it possesses.\n\nA nation that has more gold and silver is, according to this system, richer and more powerful than a nation that has less. The only purpose for which these metals are acquired is to maintain and increase the domestic industry.\n\nThe system which represents the wealth of a nation to consist in the possession of a great quantity of gold and silver, has been the favourite system of commercial countries. It recommends the accumulation of these metals as the great end of national industry and policy.\n\nThe principal advocates of this system were Mr. Mun, Mr. Locke, Mr. Hume, and many other English authors. They have written very copiously upon this subject.\n\nGold and silver, like all other commodities, are liable to variations of value. They are cheaper in some years than in others, and their price, like that of all other things, rises and falls continually.'
+}
+];
