@@ -121,8 +121,8 @@ var BOOKS_DATA = [
         titleEn: 'A Concise Introduction to Logic',
         author: 'Patrick J. Hurley',
         authorEn: 'Patrick J. Hurley',
-        category: 'science',
-        categoryName: '科学',
+        category: 'language',
+        categoryName: '语文',
         readerUrl: 'logic-reader.html?chapter=0',
         description: '帕特里克·赫尔利经典逻辑学教材，系统介绍演绎推理、归纳推理和科学方法论',
         tags: ['逻辑学', '教材', '英文原版', '思维训练']
