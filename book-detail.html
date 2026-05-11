@@ -196,12 +196,6 @@
     <script src="books-data.js"></script>
     <script src="favorites-manager.js"></script>
     <script>
-    /* 时间自动主题 */
-    (function(){
-        var hour = new Date().getHours();
-        if (hour >= 6 && hour < 18) document.documentElement.classList.add('day-theme');
-    })();
-
     /* 获取URL参数 */
     function getBookId() {
         var params = new URLSearchParams(location.search);

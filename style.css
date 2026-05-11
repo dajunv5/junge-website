@@ -2,18 +2,18 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --bg-primary: #000000;
-    --bg-secondary: #1d1d1f;
-    --bg-card: rgba(255,255,255,0.04);
-    --bg-card-hover: rgba(255,255,255,0.07);
-    --text-primary: #f5f5f7;
-    --text-secondary: #a1a1a6;
-    --text-tertiary: #6e6e73;
-    --accent-blue: #2997ff;
-    --accent-purple: #bf5af2;
-    --accent-green: #30d158;
-    --accent-orange: #ff9f0a;
-    --accent-pink: #ff375f;
+    --bg-primary: #f5f5f7;
+    --bg-secondary: #e5e5ea;
+    --bg-card: rgba(0,0,0,0.03);
+    --bg-card-hover: rgba(0,0,0,0.06);
+    --text-primary: #1d1d1f;
+    --text-secondary: #424245;
+    --text-tertiary: #86868b;
+    --accent-blue: #007aff;
+    --accent-purple: #af52de;
+    --accent-green: #34c759;
+    --accent-orange: #ff9500;
+    --accent-pink: #ff2d55;
     --top-bar-h: 52px;
     --bottom-nav-h: 56px;
     --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -283,85 +283,6 @@ a { text-decoration: none; color: inherit; }
     .cat-grid-info h3 { font-size: 18px; }
 }
 
-/* ===== 白天主题（主页/分类页跟随时间自动切换） ===== */
-html.day-theme, body.day-theme {
-    --bg-primary: #f5f5f7;
-    --bg-secondary: #e8e8ed;
-    --bg-card: rgba(0,0,0,0.03);
-    --bg-card-hover: rgba(0,0,0,0.06);
-    --text-primary: #1d1d1f;
-    --text-secondary: #6e6e73;
-    --text-tertiary: #86868b;
-}
-html.day-theme .top-bar, body.day-theme .top-bar {
-    background: rgba(245,245,247,0.85);
-    border-bottom-color: rgba(0,0,0,0.08);
-}
-html.day-theme .search-box, body.day-theme .search-box {
-    background: rgba(0,0,0,0.04);
-    border-color: rgba(0,0,0,0.08);
-}
-html.day-theme .search-box:focus-within, body.day-theme .search-box:focus-within {
-    background: rgba(0,0,0,0.06);
-    border-color: var(--accent-blue);
-}
-html.day-theme .bottom-nav, body.day-theme .bottom-nav {
-    background: rgba(245,245,247,0.9);
-    border-top-color: rgba(0,0,0,0.08);
-}
-html.day-theme .bottom-nav-item, body.day-theme .bottom-nav-item { color: var(--text-tertiary); }
-html.day-theme .bottom-nav-item.active, body.day-theme .bottom-nav-item.active { color: var(--accent-blue); }
-html.day-theme .quick-cat-icon, body.day-theme .quick-cat-icon {
-    background: rgba(0,0,0,0.04);
-}
-html.day-theme .quick-cat-item:hover .quick-cat-icon, body.day-theme .quick-cat-item:hover .quick-cat-icon { background: rgba(0,0,0,0.07); }
-html.day-theme .cat-grid-item, body.day-theme .cat-grid-item {
-    background: rgba(0,0,0,0.02);
-    border-color: rgba(0,0,0,0.06);
-}
-html.day-theme .cat-grid-item:hover, body.day-theme .cat-grid-item:hover {
-    background: rgba(0,0,0,0.04);
-    border-color: rgba(0,0,0,0.1);
-}
-html.day-theme .cat-nav, body.day-theme .cat-nav {
-    background: rgba(245,245,247,0.85);
-    border-bottom-color: rgba(0,0,0,0.08);
-}
-html.day-theme .cat-search-box, body.day-theme .cat-search-box {
-    background: rgba(0,0,0,0.04);
-    border-color: rgba(0,0,0,0.08);
-}
-html.day-theme .feed-card, body.day-theme .feed-card {
-    background: rgba(0,0,0,0.02);
-    border-color: rgba(0,0,0,0.06);
-}
-html.day-theme .feed-card:hover, body.day-theme .feed-card:hover {
-    background: rgba(0,0,0,0.04);
-    border-color: rgba(0,0,0,0.1);
-}
-html.day-theme .feed-tag.pd, body.day-theme .feed-tag.pd { background: rgba(48,209,88,0.1); }
-html.day-theme .feed-tag.gov, body.day-theme .feed-tag.gov { background: rgba(41,151,255,0.1); }
-html.day-theme .about-section, body.day-theme .about-section { border-top-color: rgba(0,0,0,0.06); }
-html.day-theme .about-contact a, body.day-theme .about-contact a {
-    background: rgba(0,0,0,0.03);
-    border-color: rgba(0,0,0,0.08);
-}
-html.day-theme .about-contact a:hover, body.day-theme .about-contact a:hover { background: rgba(0,0,0,0.06); }
-html.day-theme .cat-search-box input, body.day-theme .cat-search-box input { color: var(--text-primary); }
-html.day-theme .cat-search-box input::placeholder, body.day-theme .cat-search-box input::placeholder { color: var(--text-tertiary); }
-html.day-theme .cat-nav .back-btn, body.day-theme .cat-nav .back-btn { color: var(--accent-blue); }
-html.day-theme .wechat-modal-inner, body.day-theme .wechat-modal-inner {
-    background: rgba(255,255,255,0.98);
-    border-color: rgba(0,0,0,0.1);
-}
-html.day-theme .wechat-id-badge, body.day-theme .wechat-id-badge {
-    background: rgba(7,193,96,0.08);
-}
-html.day-theme .wechat-modal-inner > p, body.day-theme .wechat-modal-inner > p { color: var(--text-tertiary); }
-
-@media (min-width: 576px) {
-    html.day-theme .feed-cards, body.day-theme .feed-cards { gap: 10px; }
-}
 
 /* ===== 关于区域 ===== */
 .about-section {

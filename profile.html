@@ -244,12 +244,6 @@
     <script src="favorites-manager.js"></script>
     <script src="progress-manager.js"></script>
     <script>
-    /* 时间自动主题 */
-    (function(){
-        var hour = new Date().getHours();
-        if (hour >= 6 && hour < 18) document.documentElement.classList.add('day-theme');
-    })();
-
     /* 渲染阅读进度 */
     (function() {
         var progressList = ProgressManager.getProgressList();

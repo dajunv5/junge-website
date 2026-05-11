@@ -96,17 +96,6 @@
         document.getElementById('adminPwd').focus();
     }
 
-    // ===== Day/Night Theme by Time =====
-    function _applyAutoTheme() {
-        const hour = new Date().getHours();
-        const isDay = hour >= 6 && hour < 18;
-        document.body.classList.toggle('day-theme', isDay);
-        document.querySelector('meta[name="theme-color"]').content = isDay ? '#f5f5f7' : '#000000';
-    }
-    _applyAutoTheme();
-    // 每分钟检测一次
-    setInterval(_applyAutoTheme, 60000);
-
     // ===== Main Logic =====
     document.addEventListener('DOMContentLoaded', () => {
 

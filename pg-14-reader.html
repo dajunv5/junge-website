@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The World Factbook 1990 - 少年阅读</title>
+<style>
+* { margin:0; padding:0; box-sizing: border-box; }
+:root { --bg: #f5f5f5; --text: #333; --primary: #e74c3c; --card: white; }
+.header { background: var(--primary); color: white; padding: 12px 16px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; }
+.header a { color: white; text-decoration: none; font-size: 20px; }
+.chapter-select { flex:1; padding: 8px; border-radius: 6px; border: none; font-size: 14px; }
+.chapter-content { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
+.chapter-title { font-size: 22px; font-weight: bold; margin-bottom: 16px; text-align: center; }
+.chapter-text { font-size: 16px; white-space: pre-wrap; word-break: break-word; }
+.nav-btns { display: flex; justify-content: space-between; margin: 32px 0; }
+.nav-btn { padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.settings { display: flex; gap: 6px; }
+.settings button { padding: 6px 10px; background: rgba(255,255,255,0.2); border: none; color: white; border-radius: 4px; cursor: pointer; }
+.bilingual-panel { position: fixed; bottom: 0; left: 0; right: 0; height: 40vh; background: var(--card); border-top: 2px solid var(--primary); padding: 16px; overflow-y: auto; display: none; }
+.bilingual-panel.active { display: block; }
+</style>
+</head>
+<body>
+<div class="header">
+    <a href="index.html">←</a>
+    <select class="chapter-select" id="chapterSelect"></select>
+    <div class="settings">
+        <button onclick="chFont(1)">A+</button>
+        <button onclick="chFont(-1)">A-</button>
+        <button onclick="toggleBi()">双语</button>
+    </div>
+</div>
+<div class="chapter-content">
+    <div class="chapter-title" id="chTitle">加载中...</div>
+    <div class="chapter-text" id="chText"></div>
+    <div class="nav-btns">
+        <button class="nav-btn" id="prevBtn" onclick="prevCh()">← 上一章</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextCh()">下一章 →</button>
+    </div>
+</div>
+<div class="bilingual-panel" id="biPanel">
+    <div id="biText">翻译加载中...</div>
+</div>
+<script src="pg-books-js/pg-14-data.js"></script>
+<script>
+const BD = pg14Data;
+let cur = 0, fs = 16;
+
+function render(i) {
+    if (i < 0 || i >= BD.chapters.length) return;
+    cur = i;
+    const c = BD.chapters[i];
+    document.getElementById('chTitle').textContent = c.title;
+    document.getElementById('chText').textContent = c.content;
+    document.getElementById('chText').style.fontSize = fs + 'px';
+    document.getElementById('prevBtn').disabled = i === 0;
+    document.getElementById('nextBtn').disabled = i === BD.chapters.length - 1;
+    document.getElementById('chapterSelect').value = i;
+    localStorage.setItem('prog_' + BD.id, i);
+}
+function prevCh() { render(cur - 1); }
+function nextCh() { render(cur + 1); }
+function chFont(d) { fs = Math.max(12, Math.min(28, fs + d)); render(cur); }
+function toggleBi() { document.getElementById('biPanel').classList.toggle('active'); }
+
+// init
+const sel = document.getElementById('chapterSelect');
+BD.chapters.forEach((c, i) => {
+    const o = document.createElement('option');
+    o.value = i; o.textContent = c.title;
+    sel.appendChild(o);
+});
+sel.onchange = () => render(parseInt(sel.value));
+const saved = localStorage.getItem('prog_' + BD.id);
+render(saved ? parseInt(saved) : 0);
+</script>
+</body>
+</html>
