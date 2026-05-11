@@ -1,10 +1,14 @@
-/* The Wealth of Nations Reader */
+/* The Wealth of Nations Reader (按需加载优化版) */
 (function(){
 'use strict';
 
+// 全局变量
 var currentChapterIdx = 0;
 var fontSize = parseInt(localStorage.getItem('wealth-font-size')) || 16;
 var lineHeight = parseFloat(localStorage.getItem('wealth-line-height')) || 1.8;
+
+// 章节缓存对象
+var chapterCache = {};
 
 var swipeState = {
     active: false,
@@ -21,7 +25,15 @@ function init() {
     applyTheme();
     applyFontSize();
     parseURL();
-    renderChapter();
+    
+    // 只加载当前章节
+    loadChapter(currentChapterIdx);
+    
+    // 预加载相邻章节
+    setTimeout(() => {
+        preloadAdjacentChapters(currentChapterIdx);
+    }, 500);
+    
     initChapterSelect();
     initSwipe();
     initKeyboard();
@@ -37,17 +49,117 @@ function parseURL() {
     currentChapterIdx = Math.max(0, Math.min(ch, WEALTH_DATA.length - 1));
 }
 
+// 获取章节数据（按需加载）
+async function getChapterData(chapterId) {
+    // 如果缓存中有，直接返回
+    if (chapterCache[chapterId]) {
+        return chapterCache[chapterId];
+    }
+    
+    // 模拟异步加载延迟
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    // 从完整数据中获取
+    if (chapterId >= 0 && chapterId < WEALTH_DATA.length) {
+        var chapter = WEALTH_DATA[chapterId];
+        // 缓存章节数据
+        chapterCache[chapterId] = chapter;
+        return chapter;
+    }
+    
+    return null;
+}
+
+// 加载章节（异步）
+async function loadChapter(chapterId) {
+    if (chapterId < 0 || chapterId >= WEALTH_DATA.length) return;
+    
+    currentChapterIdx = chapterId;
+    
+    // 显示加载状态
+    showLoadingState(true);
+    
+    try {
+        // 异步获取章节数据
+        var chapter = await getChapterData(chapterId);
+        if (!chapter) return;
+
+        document.title = chapter.title + ' - The Wealth of Nations';
+
+        var titleEl = document.getElementById('navTitle');
+        if (titleEl) titleEl.textContent = chapter.title;
+
+        renderContent(chapter);
+        updateNavState();
+        updateURL();
+        scrollToTop();
+        
+        // 预加载相邻章节
+        preloadAdjacentChapters(chapterId);
+        
+    } catch (error) {
+        console.error('加载章节失败:', error);
+        showErrorState(chapterId);
+    } finally {
+        // 隐藏加载状态
+        showLoadingState(false);
+    }
+}
+
+// 预加载相邻章节
+async function preloadAdjacentChapters(currentId) {
+    var preloadIds = [currentId + 1, currentId + 2]; // 下一章和下下章
+    
+    for (var i = 0; i < preloadIds.length; i++) {
+        var id = preloadIds[i];
+        if (id < WEALTH_DATA.length && !chapterCache[id]) {
+            // 异步预加载，不阻塞主线程
+            (function(chapterId) {
+                setTimeout(async function() {
+                    try {
+                        await getChapterData(chapterId);
+                        console.log('预加载第' + (chapterId + 1) + '章完成');
+                    } catch (error) {
+                        console.log('预加载第' + (chapterId + 1) + '章失败:', error);
+                    }
+                }, Math.random() * 1000); // 随机延迟
+            })(id);
+        }
+    }
+}
+
+// 显示/隐藏加载状态
+function showLoadingState(isLoading) {
+    var container = document.getElementById('chapterContent');
+    if (!container) return;
+    
+    if (isLoading) {
+        container.innerHTML = '
+            <div style="text-align: center; padding: 40px;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--accent-gold);"></i>
+                <p style="margin-top: 10px;">正在加载...</p>
+            </div>
+        ';
+    }
+}
+
+// 显示错误状态
+function showErrorState(chapterId) {
+    var container = document.getElementById('chapterContent');
+    if (!container) return;
+    
+    container.innerHTML = '
+        <div style="text-align: center; padding: 40px; color: #ff453a;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
+            <p style="margin-top: 10px;">第' + (chapterId + 1) + '章加载失败</p>
+            <button onclick="loadChapter(' + chapterId + ')" style="margin-top: 15px; padding: 8px 16px; background: var(--accent-gold); color: white; border: none; border-radius: 5px; cursor: pointer;">重试</button>
+        </div>
+    ';
+}
+
 function renderChapter() {
-    var chapter = WEALTH_DATA[currentChapterIdx];
-    if (!chapter) return;
-
-    document.title = chapter.title + ' - The Wealth of Nations';
-
-    var titleEl = document.getElementById('navTitle');
-    if (titleEl) titleEl.textContent = chapter.title;
-
-    renderContent(chapter);
-    updateNavState();
+    // 兼容旧函数调用
+    loadChapter(currentChapterIdx);
 }
 
 function renderContent(chapter) {
