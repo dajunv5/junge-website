@@ -73,6 +73,23 @@
         </div>
     </section>
 
+    <!-- ===== 继续阅读 ===== -->
+    <section class="continue-reading" id="continueReading" style="display:none;">
+        <div class="section-header">
+            <h2>继续阅读</h2>
+        </div>
+        <div class="continue-card" id="continueCard">
+            <a href="#" class="continue-link" id="continueLink">
+                <div class="continue-icon"><i class="fas fa-book-open"></i></div>
+                <div class="continue-info">
+                    <h4 id="continueTitle">书名</h4>
+                    <p id="continueProgress">进度: 0%</p>
+                </div>
+                <div class="continue-arrow"><i class="fas fa-chevron-right"></i></div>
+            </a>
+        </div>
+    </section>
+
     <!-- ===== 快速分类入口 ===== -->
     <section class="quick-cats">
         <div class="quick-cats-inner">
@@ -110,7 +127,7 @@
                 <div class="cat-grid-icon"><i class="fas fa-language"></i></div>
                 <div class="cat-grid-info">
                     <h3>语文 / 阅读</h3>
-                    <span>4本</span>
+                    <span>0本</span>
                 </div>
                 <i class="fas fa-chevron-right cat-grid-arrow"></i>
             </a>
@@ -126,7 +143,7 @@
                 <div class="cat-grid-icon"><i class="fas fa-flask"></i></div>
                 <div class="cat-grid-info">
                     <h3>科学 / 自然</h3>
-                    <span>4本</span>
+                    <span>0本</span>
                 </div>
                 <i class="fas fa-chevron-right cat-grid-arrow"></i>
             </a>
@@ -142,7 +159,7 @@
                 <div class="cat-grid-icon"><i class="fas fa-globe-americas"></i></div>
                 <div class="cat-grid-info">
                     <h3>地理 / 文化</h3>
-                    <span>2本</span>
+                    <span>0本</span>
                 </div>
                 <i class="fas fa-chevron-right cat-grid-arrow"></i>
             </a>
@@ -150,7 +167,7 @@
                 <div class="cat-grid-icon"><i class="fas fa-rocket"></i></div>
                 <div class="cat-grid-info">
                     <h3>NASA 科普</h3>
-                    <span>3本</span>
+                    <span>0本</span>
                 </div>
                 <i class="fas fa-chevron-right cat-grid-arrow"></i>
             </a>
@@ -216,6 +233,58 @@
         </a>
     </nav>
 
+    <script src="books-data.js"></script>
+    <script src="favorites-manager.js"></script>
+    <script src="progress-manager.js"></script>
     <script src="script.js"></script>
+    <script>
+    /* 搜索功能 */
+    (function() {
+        var searchInput = document.getElementById('searchInput');
+        var searchClear = document.getElementById('searchClear');
+        
+        if (searchInput) {
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    var query = this.value.trim();
+                    if (query) {
+                        location.href = 'category.html?search=' + encodeURIComponent(query);
+                    }
+                }
+            });
+            
+            if (searchClear) {
+                searchClear.addEventListener('click', function() {
+                    searchInput.value = '';
+                    searchInput.focus();
+                });
+            }
+        }
+    })();
+    
+    /* 继续阅读功能 */
+    (function() {
+        var progressList = ProgressManager.getProgressList();
+        if (progressList && progressList.length > 0) {
+            var latest = progressList[0];
+            var section = document.getElementById('continueReading');
+            var card = document.getElementById('continueCard');
+            var title = document.getElementById('continueTitle');
+            var progress = document.getElementById('continueProgress');
+            var link = document.getElementById('continueLink');
+            
+            if (section && title && progress && link) {
+                // 查找书名
+                var bookInfo = BOOKS_DATA.find(function(b) { return b.id === latest.bookId; });
+                if (bookInfo) {
+                    title.textContent = bookInfo.titleCn || bookInfo.title;
+                    progress.textContent = '进度: ' + latest.percentage + '%';
+                    link.href = bookInfo.readerUrl || '#';
+                    section.style.display = 'block';
+                }
+            }
+        }
+    })();
+    </script>
 </body>
 </html>
