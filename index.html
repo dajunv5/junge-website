@@ -22,7 +22,7 @@
     <!-- ===== 顶部栏 ===== -->
     <header class="top-bar" id="topBar">
         <div class="top-bar-inner">
-            <a href="#" class="top-logo">
+            <a href="index.html" class="top-logo">
                 <span class="logo-icon"><i class="fas fa-book-open"></i></span>
                 <span class="logo-text">有意思</span>
             </a>
@@ -78,15 +78,20 @@
         <div class="section-header">
             <h2>继续阅读</h2>
         </div>
-        <div class="continue-card" id="continueCard">
-            <a href="#" class="continue-link" id="continueLink">
+        <div class="continue-card" id="continueCard" style="display:none;">
+            <a href="" class="continue-link" id="continueLink">
                 <div class="continue-icon"><i class="fas fa-book-open"></i></div>
                 <div class="continue-info">
-                    <h4 id="continueTitle">书名</h4>
-                    <p id="continueProgress">进度: 0%</p>
+                    <h4 id="continueTitle"></h4>
+                    <p id="continueProgress"></p>
                 </div>
                 <div class="continue-arrow"><i class="fas fa-chevron-right"></i></div>
             </a>
+        </div>
+        <div class="continue-empty" id="continueEmpty" style="display:none; text-align:center; padding:30px 20px; color:var(--text-tertiary);">
+            <i class="fas fa-book" style="font-size:36px; margin-bottom:12px; display:block; opacity:0.3;"></i>
+            <p>开始阅读，记录你的进度</p>
+            <a href="category.html" style="color:var(--accent, #2997ff); text-decoration:none; font-size:14px;">去选书 →</a>
         </div>
     </section>
 
@@ -227,7 +232,7 @@
             <i class="fas fa-th-large"></i>
             <span>分类</span>
         </a>
-        <a href="#about" class="bottom-nav-item">
+        <a href="profile.html" class="bottom-nav-item">
             <i class="fas fa-user"></i>
             <span>我的</span>
         </a>
@@ -265,22 +270,31 @@
     /* 继续阅读功能 */
     (function() {
         var progressList = ProgressManager.getProgressList();
-        if (progressList && progressList.length > 0) {
+        var section = document.getElementById('continueReading');
+        var card = document.getElementById('continueCard');
+        var empty = document.getElementById('continueEmpty');
+        
+        if (!progressList || progressList.length === 0) {
+            // 无阅读记录，显示引导文案
+            if (section) section.style.display = 'block';
+            if (card) card.style.display = 'none';
+            if (empty) empty.style.display = 'block';
+        } else {
+            // 有阅读记录
             var latest = progressList[0];
-            var section = document.getElementById('continueReading');
-            var card = document.getElementById('continueCard');
             var title = document.getElementById('continueTitle');
             var progress = document.getElementById('continueProgress');
             var link = document.getElementById('continueLink');
             
             if (section && title && progress && link) {
-                // 查找书名
                 var bookInfo = BOOKS_DATA.find(function(b) { return b.id === latest.bookId; });
                 if (bookInfo) {
                     title.textContent = bookInfo.titleCn || bookInfo.title;
                     progress.textContent = '进度: ' + latest.percentage + '%';
                     link.href = bookInfo.readerUrl || '#';
                     section.style.display = 'block';
+                    card.style.display = 'block';
+                    if (empty) empty.style.display = 'none';
                 }
             }
         }
