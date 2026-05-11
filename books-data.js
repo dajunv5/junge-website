@@ -114,6 +114,18 @@ var BOOKS_DATA = [
         readerUrl: 'xiyouji-reader.html',
         description: '中国古典四大名著之一，描写孙悟空保护唐僧西天取经的故事',
         tags: ['古典文学', '名著', '神话', '中国']
+    },
+    {
+        id: 'logic',
+        title: 'A Concise Introduction to Logic',
+        titleEn: 'A Concise Introduction to Logic',
+        author: 'Patrick J. Hurley',
+        authorEn: 'Patrick J. Hurley',
+        category: 'science',
+        categoryName: '科学',
+        readerUrl: 'logic-reader.html?chapter=0',
+        description: '帕特里克·赫尔利经典逻辑学教材，系统介绍演绎推理、归纳推理和科学方法论',
+        tags: ['逻辑学', '教材', '英文原版', '思维训练']
     }
 ];
 
