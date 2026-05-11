@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <linearGradient id="ibg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628"/>
+      <stop offset="100%" style="stop-color:#1a2a4a"/>
+    </linearGradient>
+    <linearGradient id="igold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#32CD32"/>
+      <stop offset="50%" style="stop-color:#228B22"/>
+      <stop offset="100%" style="stop-color:#32CD32"/>
+    </linearGradient>
+    <filter id="ishadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="300" height="400" fill="url(#ibg)"/>
+
+  <!-- 装饰网格（象征股市图表） -->
+  <g opacity="0.1">
+    <line x1="30" y1="120" x2="30" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="60" y1="120" x2="60" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="90" y1="120" x2="90" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="120" y1="120" x2="120" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="150" y1="120" x2="150" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="180" y1="120" x2="180" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="210" y1="120" x2="210" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="240" y1="120" x2="240" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="270" y1="120" x2="270" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="30" y1="120" x2="270" y2="120" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="30" y1="160" x2="270" y2="160" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="30" y1="200" x2="270" y2="200" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="30" y1="240" x2="270" y2="240" stroke="#32CD32" stroke-width="0.5"/>
+    <line x1="30" y1="280" x2="270" y2="280" stroke="#32CD32" stroke-width="0.5"/>
+  </g>
+
+  <!-- 上升趋势线（象征价值投资） -->
+  <polyline points="50,260 90,240 130,250 170,220 210,200 250,180" fill="none" stroke="#32CD32" stroke-width="2" opacity="0.4"/>
+
+  <!-- 盾牌图标（象征安全边际） -->
+  <g transform="translate(150,190)" opacity="0.5">
+    <path d="M0,-30 L25,-15 L25,15 Q25,30 0,40 Q-25,30 -25,15 L-25,-15 Z" fill="none" stroke="#32CD32" stroke-width="2"/>
+    <circle cx="0" cy="5" r="8" fill="none" stroke="#32CD32" stroke-width="1.5"/>
+    <line x1="0" y1="-5" x2="0" y2="15" stroke="#32CD32" stroke-width="1.5"/>
+    <line x1="-8" y1="5" x2="8" y2="5" stroke="#32CD32" stroke-width="1.5"/>
+  </g>
+
+  <!-- 书名 -->
+  <text x="150" y="150" font-family="KaiTi, STKaiti, 楷体, serif" font-size="44" font-weight="bold" fill="url(#igold)" text-anchor="middle" filter="url(#ishadow)" letter-spacing="8">聪明的投资者</text>
+
+  <!-- 英文标题 -->
+  <text x="150" y="175" font-family="Georgia, 'Times New Roman', serif" font-size="10" fill="#32CD32" text-anchor="middle" opacity="0.6" font-style="italic" letter-spacing="1">The Intelligent Investor</text>
+
+  <!-- 分隔线 -->
+  <line x1="80" y1="198" x2="220" y2="198" stroke="#32CD32" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- 作者 -->
+  <text x="150" y="218" font-family="KaiTi, STKaiti, 楷体, serif" font-size="13" fill="#32CD32" text-anchor="middle" opacity="0.75">〔美〕本杰明·格雷厄姆 著</text>
+
+  <!-- 描述 -->
+  <text x="150" y="245" font-family="KaiTi, STKaiti, 楷体, serif" font-size="9" fill="#228B22" text-anchor="middle" opacity="0.5">价值投资之父 · 巴菲特推荐</text>
+
+  <!-- 底部 -->
+  <rect x="0" y="375" width="300" height="25" fill="#050" opacity="0.4"/>
+  <text x="150" y="392" font-family="KaiTi, STKaiti, 楷体, serif" font-size="9" fill="#8B6914" text-anchor="middle" opacity="0.5">经典投资 · 1949</text>
+
+  <!-- 角落装饰 -->
+  <path d="M5,5 L20,5 M5,5 L5,20" stroke="#32CD32" stroke-width="0.8" opacity="0.3"/>
+  <path d="M295,5 L280,5 M295,5 L295,20" stroke="#32CD32" stroke-width="0.8" opacity="0.3"/>
+  <path d="M5,395 L20,395 M5,395 L5,380" stroke="#32CD32" stroke-width="0.8" opacity="0.3"/>
+  <path d="M295,395 L280,395 M295,395 L295,380" stroke="#32CD32" stroke-width="0.8" opacity="0.3"/>
+</svg>
