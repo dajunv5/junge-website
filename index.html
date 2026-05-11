@@ -7,43 +7,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>有意思的书窗 - 欧美经典 · 中文译读</title>
-    
-    <!-- SEO 优化 -->
-    <meta name="description" content="有意思的书窗精选中外经典书籍，从四大名著到欧美启蒙教育，为中国家庭打开一扇阅读的窗口。提供分级阅读、双语对照、AI辅助翻译功能。">
-    <meta name="keywords" content="电子书,经典阅读,三国演义,水浒传,西游记,红楼梦,国富论,聪明的投资者,麦加菲读本,免费电子书">
-    <link rel="canonical" href="https://www.jungev5.cn/">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.jungev5.cn/">
-    <meta property="og:title" content="有意思的书窗 - 欧美经典 · 中文译读">
-    <meta property="og:description" content="精选中外经典书籍，从四大名著到欧美启蒙教育，为中国家庭打开一扇阅读的窗口。">
-    <meta property="og:image" content="https://www.jungev5.cn/og-image.jpg">
-    
-    <!-- Twitter Card -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.jungev5.cn/">
-    <meta property="twitter:title" content="有意思的书窗 - 欧美经典 · 中文译读">
-    <meta property="twitter:description" content="精选中外经典书籍，从四大名著到欧美启蒙教育，为中国家庭打开一扇阅读的窗口。">
-    <meta property="twitter:image" content="https://www.jungev5.cn/og-image.jpg">
-    
-    <!-- Schema.org 结构化数据 -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "有意思的书窗",
-      "alternateName": "Fun Reading Window",
-      "url": "https://www.jungev5.cn/",
-      "description": "精选中外经典书籍，从四大名著到欧美启蒙教育，为中国家庭打开一扇阅读的窗口。",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.jungev5.cn/category.html?search={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-    
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
@@ -132,14 +95,60 @@
         </div>
     </section>
 
+    <!-- ===== 快速分类入口 ===== -->
+    <section class="quick-cats">
+        <div class="quick-cats-inner">
+            <a href="category.html?cat=language" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #2997ff;"><i class="fas fa-language"></i></div>
+                <span>语文</span>
+            </a>
+            <a href="category.html?cat=finance" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #30d158;"><i class="fas fa-chart-line"></i></div>
+                <span>金融</span>
+            </a>
+            <a href="category.html?cat=science" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #ff9f0a;"><i class="fas fa-flask"></i></div>
+                <span>科学</span>
+            </a>
+            <a href="category.html?cat=history" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #bf5af2;"><i class="fas fa-landmark"></i></div>
+                <span>历史</span>
+            </a>
+            <a href="category.html?cat=geography" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #0077ed;"><i class="fas fa-globe-americas"></i></div>
+                <span>地理</span>
+            </a>
+            <a href="category.html?cat=nasa" class="quick-cat-item">
+                <div class="quick-cat-icon" style="--cat-color: #32d74b;"><i class="fas fa-rocket"></i></div>
+                <span>NASA</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== 内容信息流 ===== -->
     <main class="content-feed" id="contentFeed">
-        <div class="cat-grid" id="catGrid">
-            <!-- 只显示有书的分类，空分类隐藏 -->
+        <div class="cat-grid">
+            <a href="category.html?cat=language" class="cat-grid-item" style="--cat-color: #2997ff;">
+                <div class="cat-grid-icon"><i class="fas fa-language"></i></div>
+                <div class="cat-grid-info">
+                    <h3>语文 / 阅读</h3>
+                    <span>0本</span>
+                </div>
+                <i class="fas fa-chevron-right cat-grid-arrow"></i>
+            </a>
             <a href="category.html?cat=finance" class="cat-grid-item" style="--cat-color: #30d158;">
                 <div class="cat-grid-icon"><i class="fas fa-chart-line"></i></div>
                 <div class="cat-grid-info">
                     <h3>金融</h3>
                     <span>2本</span>
+                </div>
+                <i class="fas fa-chevron-right cat-grid-arrow"></i>
+            </a>
+            <a href="category.html?cat=science" class="cat-grid-item" style="--cat-color: #ff9f0a;">
+                <div class="cat-grid-icon"><i class="fas fa-flask"></i></div>
+                <div class="cat-grid-info">
+                    <h3>科学 / 自然</h3>
+                    <span>0本</span>
                 </div>
                 <i class="fas fa-chevron-right cat-grid-arrow"></i>
             </a>
@@ -151,7 +160,22 @@
                 </div>
                 <i class="fas fa-chevron-right cat-grid-arrow"></i>
             </a>
-            <!-- 空分类暂时隐藏，等有书时再显示 -->
+            <a href="category.html?cat=geography" class="cat-grid-item" style="--cat-color: #0077ed;">
+                <div class="cat-grid-icon"><i class="fas fa-globe-americas"></i></div>
+                <div class="cat-grid-info">
+                    <h3>地理 / 文化</h3>
+                    <span>0本</span>
+                </div>
+                <i class="fas fa-chevron-right cat-grid-arrow"></i>
+            </a>
+            <a href="category.html?cat=nasa" class="cat-grid-item" style="--cat-color: #32d74b;">
+                <div class="cat-grid-icon"><i class="fas fa-rocket"></i></div>
+                <div class="cat-grid-info">
+                    <h3>NASA 科普</h3>
+                    <span>0本</span>
+                </div>
+                <i class="fas fa-chevron-right cat-grid-arrow"></i>
+            </a>
         </div>
     </main>
 
